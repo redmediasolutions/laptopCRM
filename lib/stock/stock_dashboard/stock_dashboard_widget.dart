@@ -1,13 +1,13 @@
 import '/backend/api_requests/api_calls.dart';
 import '/backend/supabase/supabase.dart';
-import '/components/barcode_widget.dart';
 import '/components/sidebar_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/stock/create_item_list/create_item_list_widget.dart';
-import '/stock/update_item_list/update_item_list_widget.dart';
+import '/stock/stock_list_component/stock_list_component_widget.dart';
+import '/stock/stocklistsearchcomponent/stocklistsearchcomponent_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'dart:async';
 import 'package:flutter/material.dart';
@@ -1097,673 +1097,85 @@ class _StockDashboardWidgetState extends State<StockDashboardWidget> {
                                                 final stocklistItem = _model
                                                     .listViewPagingController1!
                                                     .itemList![stocklistIndex];
-                                                return Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 0.0, 0.0, 1.0),
-                                                  child: Container(
-                                                    width: 100.0,
-                                                    decoration: BoxDecoration(
-                                                      color: functions.isEven(
-                                                              stocklistIndex
-                                                                  .toString())
-                                                          ? Color(0xFF272727)
-                                                          : Color(0x00000000),
-                                                      border: Border.all(
-                                                        color:
-                                                            Colors.transparent,
-                                                        width: 0.0,
-                                                      ),
+                                                return wrapWithModel(
+                                                  model: _model
+                                                      .stockListComponentModels
+                                                      .getModel(
+                                                    stocklistIndex.toString(),
+                                                    stocklistIndex,
+                                                  ),
+                                                  updateCallback: () =>
+                                                      safeSetState(() {}),
+                                                  child:
+                                                      StockListComponentWidget(
+                                                    key: Key(
+                                                      'Key7if_${stocklistIndex.toString()}',
                                                     ),
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  16.0,
-                                                                  10.0,
-                                                                  16.0,
-                                                                  10.0),
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        children: [
-                                                          Expanded(
-                                                            flex: 3,
-                                                            child: Container(
-                                                              decoration:
-                                                                  BoxDecoration(),
-                                                              child: Padding(
-                                                                padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            12.0,
-                                                                            0.0),
-                                                                child: Column(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .max,
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .center,
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .start,
-                                                                  children: [
-                                                                    Text(
-                                                                      valueOrDefault<
-                                                                          String>(
-                                                                        getJsonField(
-                                                                          stocklistItem,
-                                                                          r'''$.product_name''',
-                                                                        )?.toString(),
-                                                                        '0',
-                                                                      ),
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .override(
-                                                                            font:
-                                                                                GoogleFonts.inter(
-                                                                              fontWeight: FontWeight.w500,
-                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                            ),
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).alternate,
-                                                                            fontSize:
-                                                                                14.0,
-                                                                            letterSpacing:
-                                                                                0.0,
-                                                                            fontWeight:
-                                                                                FontWeight.w500,
-                                                                            fontStyle:
-                                                                                FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                          ),
-                                                                    ),
-                                                                    Text(
-                                                                      valueOrDefault<
-                                                                          String>(
-                                                                        getJsonField(
-                                                                          stocklistItem,
-                                                                          r'''$.product_config''',
-                                                                        )?.toString(),
-                                                                        'NA',
-                                                                      ),
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .override(
-                                                                            font:
-                                                                                GoogleFonts.inter(
-                                                                              fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                            ),
-                                                                            color:
-                                                                                Color(0xFFA6A6A6),
-                                                                            fontSize:
-                                                                                12.0,
-                                                                            letterSpacing:
-                                                                                0.0,
-                                                                            fontWeight:
-                                                                                FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                            fontStyle:
-                                                                                FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                          ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          Expanded(
-                                                            flex: 2,
-                                                            child: InkWell(
-                                                              splashColor: Colors
-                                                                  .transparent,
-                                                              focusColor: Colors
-                                                                  .transparent,
-                                                              hoverColor: Colors
-                                                                  .transparent,
-                                                              highlightColor:
-                                                                  Colors
-                                                                      .transparent,
-                                                              onTap:
-                                                                  () async {},
-                                                              child: Text(
-                                                                valueOrDefault<
-                                                                    String>(
-                                                                  getJsonField(
-                                                                    stocklistItem,
-                                                                    r'''$.product_serial''',
-                                                                  )?.toString(),
-                                                                  '0',
-                                                                ),
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .inter(
-                                                                        fontWeight: FlutterFlowTheme.of(context)
-                                                                            .bodyMedium
-                                                                            .fontWeight,
-                                                                        fontStyle: FlutterFlowTheme.of(context)
-                                                                            .bodyMedium
-                                                                            .fontStyle,
-                                                                      ),
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .alternate,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .fontWeight,
-                                                                      fontStyle: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .fontStyle,
-                                                                    ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          Expanded(
-                                                            flex: 2,
-                                                            child: Text(
-                                                              getJsonField(
-                                                                stocklistItem,
-                                                                r'''$.vendor_name''',
-                                                              ).toString(),
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .inter(
-                                                                      fontWeight: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .fontWeight,
-                                                                      fontStyle: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .fontStyle,
-                                                                    ),
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .alternate,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontWeight,
-                                                                    fontStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontStyle,
-                                                                  ),
-                                                            ),
-                                                          ),
-                                                          Expanded(
-                                                            flex: 2,
-                                                            child: Text(
-                                                              getJsonField(
-                                                                stocklistItem,
-                                                                r'''$.costprice''',
-                                                              ).toString(),
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .inter(
-                                                                      fontWeight: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .fontWeight,
-                                                                      fontStyle: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .fontStyle,
-                                                                    ),
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .alternate,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontWeight,
-                                                                    fontStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontStyle,
-                                                                  ),
-                                                            ),
-                                                          ),
-                                                          Expanded(
-                                                            flex: 2,
-                                                            child: Text(
-                                                              valueOrDefault<
-                                                                  String>(
-                                                                formatNumber(
-                                                                  functions.stringtoDouble(
-                                                                      valueOrDefault<
-                                                                          String>(
-                                                                    getJsonField(
-                                                                      stocklistItem,
-                                                                      r'''$.saleprice''',
-                                                                    )?.toString(),
-                                                                    'NA',
-                                                                  )),
-                                                                  formatType:
-                                                                      FormatType
-                                                                          .decimal,
-                                                                  decimalType:
-                                                                      DecimalType
-                                                                          .automatic,
-                                                                  currency: '₹',
-                                                                ),
-                                                                '0',
-                                                              ),
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .inter(
-                                                                      fontWeight: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .fontWeight,
-                                                                      fontStyle: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .fontStyle,
-                                                                    ),
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .alternate,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontWeight,
-                                                                    fontStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontStyle,
-                                                                  ),
-                                                            ),
-                                                          ),
-                                                          Expanded(
-                                                            flex: 2,
-                                                            child: Text(
-                                                              valueOrDefault<
-                                                                  String>(
-                                                                getJsonField(
-                                                                  stocklistItem,
-                                                                  r'''$.condition''',
-                                                                )?.toString(),
-                                                                'NA',
-                                                              ),
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .inter(
-                                                                      fontWeight: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .fontWeight,
-                                                                      fontStyle: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .fontStyle,
-                                                                    ),
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .alternate,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontWeight,
-                                                                    fontStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontStyle,
-                                                                  ),
-                                                            ),
-                                                          ),
-                                                          Expanded(
-                                                            flex: 2,
-                                                            child: Text(
-                                                              dateTimeFormat(
-                                                                  "MMMEd",
-                                                                  functions
-                                                                      .jsontoDateTime(
-                                                                          getJsonField(
-                                                                    stocklistItem,
-                                                                    r'''$.purchase_date''',
-                                                                  ))),
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .inter(
-                                                                      fontWeight: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .fontWeight,
-                                                                      fontStyle: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .fontStyle,
-                                                                    ),
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .alternate,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontWeight,
-                                                                    fontStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontStyle,
-                                                                  ),
-                                                            ),
-                                                          ),
-                                                          Expanded(
-                                                            flex: 2,
-                                                            child: Builder(
-                                                              builder:
-                                                                  (context) {
-                                                                if (getJsonField(
-                                                                      stocklistItem,
-                                                                      r'''$.isSold''',
-                                                                    ) ==
-                                                                    functions
-                                                                        .stringtoJson(
-                                                                            'true')) {
-                                                                  return Align(
-                                                                    alignment:
-                                                                        AlignmentDirectional(
-                                                                            -1.0,
-                                                                            0.0),
-                                                                    child:
-                                                                        Container(
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        color: Color(
-                                                                            0xFF940000),
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(12.0),
-                                                                      ),
-                                                                      child:
-                                                                          Padding(
-                                                                        padding:
-                                                                            EdgeInsets.all(8.0),
-                                                                        child:
-                                                                            Text(
-                                                                          'Sold',
-                                                                          style: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .override(
-                                                                                font: GoogleFonts.inter(
-                                                                                  fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                ),
-                                                                                color: FlutterFlowTheme.of(context).alternate,
-                                                                                letterSpacing: 0.0,
-                                                                                fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                                fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                              ),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  );
-                                                                } else {
-                                                                  return Align(
-                                                                    alignment:
-                                                                        AlignmentDirectional(
-                                                                            -1.0,
-                                                                            0.0),
-                                                                    child:
-                                                                        Container(
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        color: Color(
-                                                                            0xFF036C23),
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(12.0),
-                                                                      ),
-                                                                      child:
-                                                                          Padding(
-                                                                        padding:
-                                                                            EdgeInsets.all(8.0),
-                                                                        child:
-                                                                            Text(
-                                                                          'Available',
-                                                                          style: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .override(
-                                                                                font: GoogleFonts.inter(
-                                                                                  fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                ),
-                                                                                color: FlutterFlowTheme.of(context).alternate,
-                                                                                letterSpacing: 0.0,
-                                                                                fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                                fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                              ),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  );
-                                                                }
-                                                              },
-                                                            ),
-                                                          ),
-                                                          Expanded(
-                                                            flex: 2,
-                                                            child: Row(
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .start,
-                                                              children: [
-                                                                InkWell(
-                                                                  splashColor:
-                                                                      Colors
-                                                                          .transparent,
-                                                                  focusColor: Colors
-                                                                      .transparent,
-                                                                  hoverColor: Colors
-                                                                      .transparent,
-                                                                  highlightColor:
-                                                                      Colors
-                                                                          .transparent,
-                                                                  onTap:
-                                                                      () async {
-                                                                    await showModalBottomSheet(
-                                                                      isScrollControlled:
-                                                                          true,
-                                                                      backgroundColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      enableDrag:
-                                                                          false,
-                                                                      context:
-                                                                          context,
-                                                                      builder:
-                                                                          (context) {
-                                                                        return GestureDetector(
-                                                                          onTap:
-                                                                              () {
-                                                                            FocusScope.of(context).unfocus();
-                                                                            FocusManager.instance.primaryFocus?.unfocus();
-                                                                          },
-                                                                          child:
-                                                                              Padding(
-                                                                            padding:
-                                                                                MediaQuery.viewInsetsOf(context),
-                                                                            child:
-                                                                                UpdateItemListWidget(
-                                                                              vendorName: valueOrDefault<String>(
-                                                                                getJsonField(
-                                                                                  stocklistItem,
-                                                                                  r'''$.vendor_name''',
-                                                                                )?.toString(),
-                                                                                'NA',
-                                                                              ),
-                                                                              vendorPhone: valueOrDefault<String>(
-                                                                                getJsonField(
-                                                                                  stocklistItem,
-                                                                                  r'''$.vendor_phone''',
-                                                                                )?.toString(),
-                                                                                'NA',
-                                                                              ),
-                                                                              purchaseId: getJsonField(
-                                                                                stocklistItem,
-                                                                                r'''$.purchasesid''',
-                                                                              ),
-                                                                              stockId: getJsonField(
-                                                                                stocklistItem,
-                                                                                r'''$.stock_id''',
-                                                                              ),
-                                                                              serialNo: valueOrDefault<String>(
-                                                                                getJsonField(
-                                                                                  stocklistItem,
-                                                                                  r'''$.product_serial''',
-                                                                                )?.toString(),
-                                                                                'NA',
-                                                                              ),
-                                                                              dateOfPurchse: functions.jsontoDateTime(getJsonField(
-                                                                                stocklistItem,
-                                                                                r'''$.purchase_date''',
-                                                                              )),
-                                                                              isSold: getJsonField(
-                                                                                stocklistItem,
-                                                                                r'''$.isSold''',
-                                                                              ),
-                                                                              productReference: valueOrDefault<String>(
-                                                                                getJsonField(
-                                                                                  stocklistItem,
-                                                                                  r'''$.product_reference''',
-                                                                                )?.toString(),
-                                                                                'NA',
-                                                                              ),
-                                                                              salePrice: getJsonField(
-                                                                                stocklistItem,
-                                                                                r'''$.saleprice''',
-                                                                              ).toString(),
-                                                                              costPrice: getJsonField(
-                                                                                stocklistItem,
-                                                                                r'''$.costprice''',
-                                                                              ).toString(),
-                                                                            ),
-                                                                          ),
-                                                                        );
-                                                                      },
-                                                                    ).then((value) =>
-                                                                        safeSetState(
-                                                                            () {}));
-
-                                                                    safeSetState(() => _model
-                                                                        .listViewPagingController1
-                                                                        ?.refresh());
-                                                                  },
-                                                                  child: Icon(
-                                                                    Icons
-                                                                        .edit_note,
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .alternate,
-                                                                    size: 24.0,
-                                                                  ),
-                                                                ),
-                                                                InkWell(
-                                                                  splashColor:
-                                                                      Colors
-                                                                          .transparent,
-                                                                  focusColor: Colors
-                                                                      .transparent,
-                                                                  hoverColor: Colors
-                                                                      .transparent,
-                                                                  highlightColor:
-                                                                      Colors
-                                                                          .transparent,
-                                                                  onTap:
-                                                                      () async {
-                                                                    var confirmDialogResponse =
-                                                                        await showDialog<bool>(
-                                                                              context: context,
-                                                                              builder: (alertDialogContext) {
-                                                                                return AlertDialog(
-                                                                                  title: Text('Confirm Action'),
-                                                                                  content: Text('Are you sure you want to delete '),
-                                                                                  actions: [
-                                                                                    TextButton(
-                                                                                      onPressed: () => Navigator.pop(alertDialogContext, false),
-                                                                                      child: Text('Cancel'),
-                                                                                    ),
-                                                                                    TextButton(
-                                                                                      onPressed: () => Navigator.pop(alertDialogContext, true),
-                                                                                      child: Text('Confirm'),
-                                                                                    ),
-                                                                                  ],
-                                                                                );
-                                                                              },
-                                                                            ) ??
-                                                                            false;
-                                                                    if (confirmDialogResponse) {
-                                                                      await StockTable()
-                                                                          .delete(
-                                                                        matchingRows:
-                                                                            (rows) =>
-                                                                                rows.eqOrNull(
-                                                                          'id',
-                                                                          getJsonField(
-                                                                            stocklistItem,
-                                                                            r'''$.stock_id''',
-                                                                          ),
-                                                                        ),
-                                                                      );
-                                                                      safeSetState(() => _model
-                                                                          .listViewPagingController1
-                                                                          ?.refresh());
-                                                                    }
-                                                                  },
-                                                                  child: Icon(
-                                                                    Icons
-                                                                        .delete_sharp,
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .alternate,
-                                                                    size: 24.0,
-                                                                  ),
-                                                                ),
-                                                              ].divide(SizedBox(
-                                                                  width: 10.0)),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
+                                                    parameter1: getJsonField(
+                                                      stocklistItem,
+                                                      r'''$.product_name''',
                                                     ),
+                                                    parameter2: getJsonField(
+                                                      stocklistItem,
+                                                      r'''$.product_config''',
+                                                    ),
+                                                    parameter3: getJsonField(
+                                                      stocklistItem,
+                                                      r'''$.product_serial''',
+                                                    ),
+                                                    parameter5: getJsonField(
+                                                      stocklistItem,
+                                                      r'''$.vendor_name''',
+                                                    ),
+                                                    parameter6: getJsonField(
+                                                      stocklistItem,
+                                                      r'''$.costprice''',
+                                                    ),
+                                                    parameter7: getJsonField(
+                                                      stocklistItem,
+                                                      r'''$.saleprice''',
+                                                    ),
+                                                    parameter8: getJsonField(
+                                                      stocklistItem,
+                                                      r'''$.condition''',
+                                                    ),
+                                                    parameter9: getJsonField(
+                                                      stocklistItem,
+                                                      r'''$.purchase_date''',
+                                                    ),
+                                                    parameter10: getJsonField(
+                                                      stocklistItem,
+                                                      r'''$.isSold''',
+                                                    ),
+                                                    parameter11: getJsonField(
+                                                      stocklistItem,
+                                                      r'''$.vendor_name''',
+                                                    ),
+                                                    parameter12: getJsonField(
+                                                      stocklistItem,
+                                                      r'''$.vendor_phone''',
+                                                    ),
+                                                    parameter13: getJsonField(
+                                                      stocklistItem,
+                                                      r'''$.purchasesid''',
+                                                    ),
+                                                    parameter14: getJsonField(
+                                                      stocklistItem,
+                                                      r'''$.stock_id''',
+                                                    ),
+                                                    parameter15: getJsonField(
+                                                      stocklistItem,
+                                                      r'''$.product_serial''',
+                                                    ),
+                                                    parameter16: getJsonField(
+                                                      stocklistItem,
+                                                      r'''$.product_reference''',
+                                                    ),
+                                                    parameter17: getJsonField(
+                                                      stocklistItem,
+                                                      r'''$.saleprice''',
+                                                    ),
+                                                    parameter18: stocklistIndex,
                                                   ),
                                                 );
                                               },
@@ -1829,534 +1241,76 @@ class _StockDashboardWidgetState extends State<StockDashboardWidget> {
                                                         final searchStockItem =
                                                             searchStock[
                                                                 searchStockIndex];
-                                                        return Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      1.0),
-                                                          child: Container(
-                                                            width: 100.0,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: functions.isEven(
-                                                                      searchStockIndex
-                                                                          .toString())
-                                                                  ? Color(
-                                                                      0xFF272727)
-                                                                  : Color(
-                                                                      0x00000000),
-                                                              border:
-                                                                  Border.all(
-                                                                color: Colors
-                                                                    .transparent,
-                                                                width: 0.0,
-                                                              ),
-                                                            ),
-                                                            child: Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          16.0,
-                                                                          10.0,
-                                                                          16.0,
-                                                                          10.0),
-                                                              child: Row(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .max,
-                                                                children: [
-                                                                  Expanded(
-                                                                    flex: 3,
-                                                                    child:
-                                                                        Container(
-                                                                      decoration:
-                                                                          BoxDecoration(),
-                                                                      child:
-                                                                          Padding(
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            12.0,
-                                                                            0.0),
-                                                                        child:
-                                                                            Column(
-                                                                          mainAxisSize:
-                                                                              MainAxisSize.max,
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.center,
-                                                                          crossAxisAlignment:
-                                                                              CrossAxisAlignment.start,
-                                                                          children: [
-                                                                            Text(
-                                                                              valueOrDefault<String>(
-                                                                                searchStockItem.model,
-                                                                                'NA',
-                                                                              ),
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    font: GoogleFonts.inter(
-                                                                                      fontWeight: FontWeight.w500,
-                                                                                      fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                    ),
-                                                                                    color: FlutterFlowTheme.of(context).alternate,
-                                                                                    fontSize: 14.0,
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.w500,
-                                                                                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                  ),
-                                                                            ),
-                                                                            Text(
-                                                                              searchStockItem.productconfig,
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    font: GoogleFonts.inter(
-                                                                                      fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                                      fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                    ),
-                                                                                    color: Color(0xFFA6A6A6),
-                                                                                    fontSize: 12.0,
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                  ),
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  Expanded(
-                                                                    flex: 2,
-                                                                    child:
-                                                                        InkWell(
-                                                                      splashColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      focusColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      hoverColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      highlightColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      onTap:
-                                                                          () async {
-                                                                        await showModalBottomSheet(
-                                                                          isScrollControlled:
-                                                                              true,
-                                                                          backgroundColor:
-                                                                              Colors.transparent,
-                                                                          enableDrag:
-                                                                              false,
-                                                                          context:
-                                                                              context,
-                                                                          builder:
-                                                                              (context) {
-                                                                            return GestureDetector(
-                                                                              onTap: () {
-                                                                                FocusScope.of(context).unfocus();
-                                                                                FocusManager.instance.primaryFocus?.unfocus();
-                                                                              },
-                                                                              child: Padding(
-                                                                                padding: MediaQuery.viewInsetsOf(context),
-                                                                                child: BarcodeWidget(
-                                                                                  barcode: searchStockItem.serialNo,
-                                                                                ),
-                                                                              ),
-                                                                            );
-                                                                          },
-                                                                        ).then((value) =>
-                                                                            safeSetState(() {}));
-                                                                      },
-                                                                      child:
-                                                                          Text(
-                                                                        valueOrDefault<
-                                                                            String>(
-                                                                          searchStockItem
-                                                                              .serialNo,
-                                                                          'NA',
-                                                                        ),
-                                                                        style: FlutterFlowTheme.of(context)
-                                                                            .bodyMedium
-                                                                            .override(
-                                                                              font: GoogleFonts.inter(
-                                                                                fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                                fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                              ),
-                                                                              color: FlutterFlowTheme.of(context).alternate,
-                                                                              letterSpacing: 0.0,
-                                                                              fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                            ),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  Expanded(
-                                                                    flex: 2,
-                                                                    child: Text(
-                                                                      valueOrDefault<
-                                                                          String>(
-                                                                        searchStockItem
-                                                                            .vendor,
-                                                                        'NA',
-                                                                      ),
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .override(
-                                                                            font:
-                                                                                GoogleFonts.inter(
-                                                                              fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                            ),
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).alternate,
-                                                                            letterSpacing:
-                                                                                0.0,
-                                                                            fontWeight:
-                                                                                FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                            fontStyle:
-                                                                                FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                          ),
-                                                                    ),
-                                                                  ),
-                                                                  Expanded(
-                                                                    flex: 2,
-                                                                    child: Text(
-                                                                      valueOrDefault<
-                                                                          String>(
-                                                                        formatNumber(
-                                                                          functions
-                                                                              .stringtoDouble(searchStockItem.costPrice),
-                                                                          formatType:
-                                                                              FormatType.decimal,
-                                                                          decimalType:
-                                                                              DecimalType.automatic,
-                                                                          currency:
-                                                                              '₹',
-                                                                        ),
-                                                                        '0',
-                                                                      ),
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .override(
-                                                                            font:
-                                                                                GoogleFonts.inter(
-                                                                              fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                            ),
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).alternate,
-                                                                            letterSpacing:
-                                                                                0.0,
-                                                                            fontWeight:
-                                                                                FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                            fontStyle:
-                                                                                FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                          ),
-                                                                    ),
-                                                                  ),
-                                                                  Expanded(
-                                                                    flex: 2,
-                                                                    child: Text(
-                                                                      valueOrDefault<
-                                                                          String>(
-                                                                        formatNumber(
-                                                                          functions
-                                                                              .stringtoDouble(searchStockItem.salePrice),
-                                                                          formatType:
-                                                                              FormatType.decimal,
-                                                                          decimalType:
-                                                                              DecimalType.automatic,
-                                                                          currency:
-                                                                              '₹',
-                                                                        ),
-                                                                        '0',
-                                                                      ),
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .override(
-                                                                            font:
-                                                                                GoogleFonts.inter(
-                                                                              fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                            ),
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).alternate,
-                                                                            letterSpacing:
-                                                                                0.0,
-                                                                            fontWeight:
-                                                                                FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                            fontStyle:
-                                                                                FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                          ),
-                                                                    ),
-                                                                  ),
-                                                                  Expanded(
-                                                                    flex: 2,
-                                                                    child: Text(
-                                                                      valueOrDefault<
-                                                                          String>(
-                                                                        searchStockItem
-                                                                            .condition,
-                                                                        'NA',
-                                                                      ),
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .override(
-                                                                            font:
-                                                                                GoogleFonts.inter(
-                                                                              fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                            ),
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).alternate,
-                                                                            letterSpacing:
-                                                                                0.0,
-                                                                            fontWeight:
-                                                                                FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                            fontStyle:
-                                                                                FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                          ),
-                                                                    ),
-                                                                  ),
-                                                                  Expanded(
-                                                                    flex: 2,
-                                                                    child: Text(
-                                                                      dateTimeFormat(
-                                                                          "MMMMEEEEd",
-                                                                          searchStockItem
-                                                                              .purchaseDate!),
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .override(
-                                                                            font:
-                                                                                GoogleFonts.inter(
-                                                                              fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                            ),
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).alternate,
-                                                                            letterSpacing:
-                                                                                0.0,
-                                                                            fontWeight:
-                                                                                FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                            fontStyle:
-                                                                                FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                          ),
-                                                                    ),
-                                                                  ),
-                                                                  Expanded(
-                                                                    flex: 2,
-                                                                    child:
-                                                                        Builder(
-                                                                      builder:
-                                                                          (context) {
-                                                                        if (searchStockItem.isSold ==
-                                                                            true) {
-                                                                          return Align(
-                                                                            alignment:
-                                                                                AlignmentDirectional(-1.0, 0.0),
-                                                                            child:
-                                                                                Container(
-                                                                              decoration: BoxDecoration(
-                                                                                color: Color(0xFF940000),
-                                                                                borderRadius: BorderRadius.circular(12.0),
-                                                                              ),
-                                                                              child: Padding(
-                                                                                padding: EdgeInsets.all(8.0),
-                                                                                child: Text(
-                                                                                  'Sold',
-                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        font: GoogleFonts.inter(
-                                                                                          fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                                          fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                        ),
-                                                                                        color: FlutterFlowTheme.of(context).alternate,
-                                                                                        letterSpacing: 0.0,
-                                                                                        fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                                        fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                      ),
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                          );
-                                                                        } else {
-                                                                          return Align(
-                                                                            alignment:
-                                                                                AlignmentDirectional(-1.0, 0.0),
-                                                                            child:
-                                                                                Container(
-                                                                              decoration: BoxDecoration(
-                                                                                color: Color(0xFF036C23),
-                                                                                borderRadius: BorderRadius.circular(12.0),
-                                                                              ),
-                                                                              child: Padding(
-                                                                                padding: EdgeInsets.all(8.0),
-                                                                                child: Text(
-                                                                                  'Available',
-                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        font: GoogleFonts.inter(
-                                                                                          fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                                          fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                        ),
-                                                                                        color: FlutterFlowTheme.of(context).alternate,
-                                                                                        letterSpacing: 0.0,
-                                                                                        fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                                        fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                      ),
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                          );
-                                                                        }
-                                                                      },
-                                                                    ),
-                                                                  ),
-                                                                  Expanded(
-                                                                    flex: 2,
-                                                                    child: Row(
-                                                                      mainAxisSize:
-                                                                          MainAxisSize
-                                                                              .max,
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .start,
-                                                                      children:
-                                                                          [
-                                                                        InkWell(
-                                                                          splashColor:
-                                                                              Colors.transparent,
-                                                                          focusColor:
-                                                                              Colors.transparent,
-                                                                          hoverColor:
-                                                                              Colors.transparent,
-                                                                          highlightColor:
-                                                                              Colors.transparent,
-                                                                          onTap:
-                                                                              () async {
-                                                                            await showModalBottomSheet(
-                                                                              isScrollControlled: true,
-                                                                              backgroundColor: Colors.transparent,
-                                                                              enableDrag: false,
-                                                                              context: context,
-                                                                              builder: (context) {
-                                                                                return GestureDetector(
-                                                                                  onTap: () {
-                                                                                    FocusScope.of(context).unfocus();
-                                                                                    FocusManager.instance.primaryFocus?.unfocus();
-                                                                                  },
-                                                                                  child: Padding(
-                                                                                    padding: MediaQuery.viewInsetsOf(context),
-                                                                                    child: UpdateItemListWidget(
-                                                                                      vendorName: searchStockItem.vendor,
-                                                                                      vendorPhone: searchStockItem.phone,
-                                                                                      purchaseId: searchStockItem.purchaseid,
-                                                                                      stockId: searchStockItem.stockid,
-                                                                                      serialNo: searchStockItem.serialNo,
-                                                                                      dateOfPurchse: searchStockItem.purchaseDate,
-                                                                                      isSold: searchStockItem.isSold,
-                                                                                      productReference: searchStockItem.productReference,
-                                                                                      salePrice: searchStockItem.salePrice,
-                                                                                      costPrice: searchStockItem.costPrice,
-                                                                                    ),
-                                                                                  ),
-                                                                                );
-                                                                              },
-                                                                            ).then((value) =>
-                                                                                safeSetState(() {}));
-
-                                                                            safeSetState(() =>
-                                                                                _model.listViewPagingController1?.refresh());
-                                                                          },
-                                                                          child:
-                                                                              Icon(
-                                                                            Icons.edit_note,
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).alternate,
-                                                                            size:
-                                                                                24.0,
-                                                                          ),
-                                                                        ),
-                                                                        InkWell(
-                                                                          splashColor:
-                                                                              Colors.transparent,
-                                                                          focusColor:
-                                                                              Colors.transparent,
-                                                                          hoverColor:
-                                                                              Colors.transparent,
-                                                                          highlightColor:
-                                                                              Colors.transparent,
-                                                                          onTap:
-                                                                              () async {
-                                                                            var confirmDialogResponse = await showDialog<bool>(
-                                                                                  context: context,
-                                                                                  builder: (alertDialogContext) {
-                                                                                    return AlertDialog(
-                                                                                      title: Text('Confirm Action'),
-                                                                                      content: Text('Are you sure you want to delete ?'),
-                                                                                      actions: [
-                                                                                        TextButton(
-                                                                                          onPressed: () => Navigator.pop(alertDialogContext, false),
-                                                                                          child: Text('Cancel'),
-                                                                                        ),
-                                                                                        TextButton(
-                                                                                          onPressed: () => Navigator.pop(alertDialogContext, true),
-                                                                                          child: Text('Confirm'),
-                                                                                        ),
-                                                                                      ],
-                                                                                    );
-                                                                                  },
-                                                                                ) ??
-                                                                                false;
-                                                                            if (confirmDialogResponse) {
-                                                                              await StockTable().delete(
-                                                                                matchingRows: (rows) => rows.eqOrNull(
-                                                                                  'id',
-                                                                                  searchStockItem.stockid,
-                                                                                ),
-                                                                              );
-                                                                              await showDialog(
-                                                                                context: context,
-                                                                                builder: (alertDialogContext) {
-                                                                                  return AlertDialog(
-                                                                                    title: Text('Deleted'),
-                                                                                    content: Text('Product has been deleted'),
-                                                                                    actions: [
-                                                                                      TextButton(
-                                                                                        onPressed: () => Navigator.pop(alertDialogContext),
-                                                                                        child: Text('Ok'),
-                                                                                      ),
-                                                                                    ],
-                                                                                  );
-                                                                                },
-                                                                              );
-                                                                            }
-                                                                          },
-                                                                          child:
-                                                                              Icon(
-                                                                            Icons.delete_sharp,
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).alternate,
-                                                                            size:
-                                                                                24.0,
-                                                                          ),
-                                                                        ),
-                                                                      ].divide(SizedBox(
-                                                                              width: 10.0)),
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
+                                                        return StocklistsearchcomponentWidget(
+                                                          key: Key(
+                                                              'Keyftv_${searchStockIndex}_of_${searchStock.length}'),
+                                                          parameter1:
+                                                              valueOrDefault<
+                                                                  String>(
+                                                            searchStockItem
+                                                                .model,
+                                                            'NA',
                                                           ),
+                                                          parameter2:
+                                                              searchStockItem
+                                                                  .productconfig,
+                                                          parameter3:
+                                                              valueOrDefault<
+                                                                  String>(
+                                                            searchStockItem
+                                                                .serialNo,
+                                                            'NA',
+                                                          ),
+                                                          parameter4:
+                                                              searchStockItem
+                                                                  .serialNo,
+                                                          parameter5:
+                                                              valueOrDefault<
+                                                                  String>(
+                                                            searchStockItem
+                                                                .vendor,
+                                                            'NA',
+                                                          ),
+                                                          parameter6:
+                                                              searchStockItem
+                                                                  .costPrice,
+                                                          parameter7:
+                                                              searchStockItem
+                                                                  .salePrice,
+                                                          parameter8:
+                                                              valueOrDefault<
+                                                                  String>(
+                                                            searchStockItem
+                                                                .condition,
+                                                            'NA',
+                                                          ),
+                                                          parameter9: dateTimeFormat(
+                                                              "MMMMEEEEd",
+                                                              searchStockItem
+                                                                  .purchaseDate!),
+                                                          parameter10:
+                                                              searchStockItem
+                                                                  .isSold,
+                                                          parameter11:
+                                                              searchStockItem
+                                                                  .vendor,
+                                                          parameter12:
+                                                              searchStockItem
+                                                                  .phone,
+                                                          parameter13:
+                                                              searchStockItem
+                                                                  .purchaseid,
+                                                          parameter14:
+                                                              searchStockItem
+                                                                  .stockid,
+                                                          parameter15:
+                                                              searchStockItem
+                                                                  .purchaseDate,
+                                                          parameter16:
+                                                              searchStockItem
+                                                                  .productReference,
+                                                          parameter17:
+                                                              searchStockIndex,
                                                         );
                                                       },
                                                     );

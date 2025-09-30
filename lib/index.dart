@@ -8,7 +8,7 @@ export '/stock/stock_dashboard/stock_dashboard_widget.dart'
 export '/auth/create_account/create_account_widget.dart'
     show CreateAccountWidget;
 export '/auth/login/login_widget.dart' show LoginWidget;
-export '/products/master_product_dashboard/master_product_dashboard_widget.dart'
+export '/master_products/master_product_dashboard/master_product_dashboard_widget.dart'
     show MasterProductDashboardWidget;
 export '/invoice/create_invoice/create_invoice_widget.dart'
     show CreateInvoiceWidget;
