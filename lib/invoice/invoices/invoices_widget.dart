@@ -393,12 +393,10 @@ class _InvoicesWidgetState extends State<InvoicesWidget> {
                                 ))
                                   Expanded(
                                     flex: 12,
-                                    child: Container(
-                                      width: MediaQuery.sizeOf(context).width *
-                                          0.7,
-                                      constraints: BoxConstraints(
-                                        maxWidth: 1270.0,
-                                      ),
+                                    child: AnimatedContainer(
+                                      duration: Duration(milliseconds: 100),
+                                      curve: Curves.easeInOut,
+                                      width: 700.0,
                                       decoration: BoxDecoration(
                                         color: Color(0xFF191919),
                                         boxShadow: [
@@ -602,6 +600,10 @@ class _InvoicesWidgetState extends State<InvoicesWidget> {
                                                               FFAppState()
                                                                   .businessRefID,
                                                             )
+                                                            .eqOrNull(
+                                                              'isarchive',
+                                                              false,
+                                                            )
                                                             .order(
                                                                 'invoice_id'),
                                                       )))
@@ -661,6 +663,9 @@ class _InvoicesWidgetState extends State<InvoicesWidget> {
                                                         _model.invoiceId =
                                                             listViewAllInvoicesRow
                                                                 .invoiceId;
+                                                        _model.paymentId =
+                                                            listViewAllInvoicesRow
+                                                                .paymentid;
                                                         safeSetState(() {});
                                                         await Future.delayed(
                                                           Duration(
@@ -872,7 +877,7 @@ class _InvoicesWidgetState extends State<InvoicesWidget> {
                                                                     Builder(
                                                                       builder:
                                                                           (context) {
-                                                                        if (listViewAllInvoicesRow.paymentStatus ??
+                                                                        if (listViewAllInvoicesRow.paymentstatus ??
                                                                             false) {
                                                                           return Align(
                                                                             alignment:
@@ -947,36 +952,41 @@ class _InvoicesWidgetState extends State<InvoicesWidget> {
                                                                               .transparent,
                                                                       onTap:
                                                                           () async {
-                                                                        await showDialog(
-                                                                          context:
-                                                                              context,
-                                                                          builder:
-                                                                              (alertDialogContext) {
-                                                                            return AlertDialog(
-                                                                              title: Text('Delete Invoice'),
-                                                                              content: Text('Are you sure you want to delete this invoice'),
-                                                                              actions: [
-                                                                                TextButton(
-                                                                                  onPressed: () => Navigator.pop(alertDialogContext),
-                                                                                  child: Text('Ok'),
-                                                                                ),
-                                                                              ],
-                                                                            );
-                                                                          },
-                                                                        );
-                                                                        await InvoicesTable()
-                                                                            .delete(
-                                                                          matchingRows: (rows) =>
-                                                                              rows.eqOrNull(
-                                                                            'id',
-                                                                            listViewAllInvoicesRow.invoiceId,
-                                                                          ),
-                                                                        );
-                                                                        safeSetState(() =>
-                                                                            _model.requestCompleter2 =
-                                                                                null);
-                                                                        await _model
-                                                                            .waitForRequestCompleted2();
+                                                                        var confirmDialogResponse = await showDialog<bool>(
+                                                                              context: context,
+                                                                              builder: (alertDialogContext) {
+                                                                                return AlertDialog(
+                                                                                  title: Text('Confirm Action'),
+                                                                                  content: Text('Are you sure you want to archive this invoice ?'),
+                                                                                  actions: [
+                                                                                    TextButton(
+                                                                                      onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                      child: Text('Cancel'),
+                                                                                    ),
+                                                                                    TextButton(
+                                                                                      onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                      child: Text('Confirm'),
+                                                                                    ),
+                                                                                  ],
+                                                                                );
+                                                                              },
+                                                                            ) ??
+                                                                            false;
+                                                                        if (confirmDialogResponse) {
+                                                                          await InvoicesTable()
+                                                                              .update(
+                                                                            data: {
+                                                                              'isarchive': true,
+                                                                            },
+                                                                            matchingRows: (rows) =>
+                                                                                rows.eqOrNull(
+                                                                              'id',
+                                                                              listViewAllInvoicesRow.invoiceId,
+                                                                            ),
+                                                                          );
+                                                                          safeSetState(() =>
+                                                                              _model.requestCompleter2 = null);
+                                                                        }
                                                                       },
                                                                       child:
                                                                           Icon(
@@ -1048,7 +1058,7 @@ class _InvoicesWidgetState extends State<InvoicesWidget> {
                                               : null;
 
                                       return AnimatedContainer(
-                                        duration: Duration(milliseconds: 100),
+                                        duration: Duration(milliseconds: 640),
                                         curve: Curves.easeInOut,
                                         width: _model.showinvoice ? 800.0 : 0.0,
                                         decoration: BoxDecoration(
@@ -1095,9 +1105,9 @@ class _InvoicesWidgetState extends State<InvoicesWidget> {
                                                                       context),
                                                               child:
                                                                   RecordPaymentWidget(
-                                                                invoiceId:
+                                                                paymentid:
                                                                     showInvoiceAllInvoicesRow
-                                                                        ?.invoiceId,
+                                                                        ?.paymentid,
                                                               ),
                                                             ),
                                                           );
@@ -1269,6 +1279,336 @@ class _InvoicesWidgetState extends State<InvoicesWidget> {
                                                     },
                                                   ),
                                                 ].divide(SizedBox(width: 10.0)),
+                                              ),
+                                            ),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                color: Color(0xFF181818),
+                                              ),
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                    width: double.infinity,
+                                                    height: 40.0,
+                                                    decoration: BoxDecoration(
+                                                      color: Color(0xFF252525),
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                        bottomLeft:
+                                                            Radius.circular(
+                                                                0.0),
+                                                        bottomRight:
+                                                            Radius.circular(
+                                                                0.0),
+                                                        topLeft:
+                                                            Radius.circular(
+                                                                0.0),
+                                                        topRight:
+                                                            Radius.circular(
+                                                                0.0),
+                                                      ),
+                                                    ),
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  16.0,
+                                                                  0.0,
+                                                                  16.0,
+                                                                  0.0),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        children: [
+                                                          Expanded(
+                                                            flex: 3,
+                                                            child: Text(
+                                                              'Mode of Payment',
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .labelSmall
+                                                                  .override(
+                                                                    font: GoogleFonts
+                                                                        .inter(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontStyle: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .labelSmall
+                                                                          .fontStyle,
+                                                                    ),
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primary,
+                                                                    fontSize:
+                                                                        14.0,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .labelSmall
+                                                                        .fontStyle,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                          Expanded(
+                                                            flex: 2,
+                                                            child: Text(
+                                                              'Amount',
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .labelSmall
+                                                                  .override(
+                                                                    font: GoogleFonts
+                                                                        .inter(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontStyle: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .labelSmall
+                                                                          .fontStyle,
+                                                                    ),
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primary,
+                                                                    fontSize:
+                                                                        14.0,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .labelSmall
+                                                                        .fontStyle,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                          Expanded(
+                                                            flex: 2,
+                                                            child: Text(
+                                                              'Narration',
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .labelSmall
+                                                                  .override(
+                                                                    font: GoogleFonts
+                                                                        .inter(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontStyle: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .labelSmall
+                                                                          .fontStyle,
+                                                                    ),
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primary,
+                                                                    fontSize:
+                                                                        14.0,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .labelSmall
+                                                                        .fontStyle,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  FutureBuilder<
+                                                      List<PaymentsRow>>(
+                                                    future: PaymentsTable()
+                                                        .queryRows(
+                                                      queryFn: (q) =>
+                                                          q.eqOrNull(
+                                                        'id',
+                                                        _model.paymentId,
+                                                      ),
+                                                    ),
+                                                    builder:
+                                                        (context, snapshot) {
+                                                      // Customize what your widget looks like when it's loading.
+                                                      if (!snapshot.hasData) {
+                                                        return Center(
+                                                          child: SizedBox(
+                                                            width: 50.0,
+                                                            height: 50.0,
+                                                            child:
+                                                                CircularProgressIndicator(
+                                                              valueColor:
+                                                                  AlwaysStoppedAnimation<
+                                                                      Color>(
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        );
+                                                      }
+                                                      List<PaymentsRow>
+                                                          listViewPaymentsRowList =
+                                                          snapshot.data!;
+
+                                                      return ListView.builder(
+                                                        padding:
+                                                            EdgeInsets.zero,
+                                                        primary: false,
+                                                        shrinkWrap: true,
+                                                        scrollDirection:
+                                                            Axis.vertical,
+                                                        itemCount:
+                                                            listViewPaymentsRowList
+                                                                .length,
+                                                        itemBuilder: (context,
+                                                            listViewIndex) {
+                                                          final listViewPaymentsRow =
+                                                              listViewPaymentsRowList[
+                                                                  listViewIndex];
+                                                          return Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        1.0),
+                                                            child: Container(
+                                                              width: 100.0,
+                                                              height: 32.78,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                border:
+                                                                    Border.all(
+                                                                  color: Colors
+                                                                      .transparent,
+                                                                  width: 0.0,
+                                                                ),
+                                                              ),
+                                                              child: Padding(
+                                                                padding: EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        16.0,
+                                                                        0.0,
+                                                                        16.0,
+                                                                        0.0),
+                                                                child: Row(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  children: [
+                                                                    Expanded(
+                                                                      flex: 3,
+                                                                      child:
+                                                                          Column(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.max,
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.center,
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.start,
+                                                                        children: [
+                                                                          Text(
+                                                                            valueOrDefault<String>(
+                                                                              listViewPaymentsRow.paymentMode,
+                                                                              'NA',
+                                                                            ),
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                  font: GoogleFonts.inter(
+                                                                                    fontWeight: FontWeight.w500,
+                                                                                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                  ),
+                                                                                  color: Colors.white,
+                                                                                  fontSize: 14.0,
+                                                                                  letterSpacing: 0.0,
+                                                                                  fontWeight: FontWeight.w500,
+                                                                                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                    Expanded(
+                                                                      flex: 2,
+                                                                      child:
+                                                                          Column(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.max,
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.center,
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.start,
+                                                                        children: [
+                                                                          Text(
+                                                                            valueOrDefault<String>(
+                                                                              listViewPaymentsRow.paymentAmount?.toString(),
+                                                                              '0',
+                                                                            ),
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                  font: GoogleFonts.inter(
+                                                                                    fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                                                                                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                  ),
+                                                                                  color: Colors.white,
+                                                                                  letterSpacing: 0.0,
+                                                                                  fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                                                                                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                    Expanded(
+                                                                      flex: 2,
+                                                                      child:
+                                                                          Text(
+                                                                        valueOrDefault<
+                                                                            String>(
+                                                                          listViewPaymentsRow
+                                                                              .narration,
+                                                                          '0',
+                                                                        ),
+                                                                        style: FlutterFlowTheme.of(context)
+                                                                            .bodyMedium
+                                                                            .override(
+                                                                              font: GoogleFonts.inter(
+                                                                                fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                                                                                fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                              ),
+                                                                              color: Colors.white,
+                                                                              letterSpacing: 0.0,
+                                                                              fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                            ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          );
+                                                        },
+                                                      );
+                                                    },
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                             custom_widgets.ScreenshotContainer(

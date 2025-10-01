@@ -69,4 +69,7 @@ class StockRow extends SupabaseDataRow {
 
   String? get condition => getField<String>('condition');
   set condition(String? value) => setField<String>('condition', value);
+
+  int? get invoiceid => getField<int>('invoiceid');
+  set invoiceid(int? value) => setField<int>('invoiceid', value);
 }

@@ -13,6 +13,8 @@ class InvoicesModel extends FlutterFlowModel<InvoicesWidget> {
 
   int? invoiceId;
 
+  int? paymentId;
+
   ///  State fields for stateful widgets in this page.
 
   // Model for sidebar component.

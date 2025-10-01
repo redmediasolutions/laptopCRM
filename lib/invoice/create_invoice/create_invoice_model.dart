@@ -107,6 +107,8 @@ class CreateInvoiceModel extends FlutterFlowModel<CreateInvoiceWidget> {
   String? invoicelistItems;
   // Stores action output result for [Backend Call - Insert Row] action in save widget.
   InvoicesRow? invoiceNew;
+  // Stores action output result for [Backend Call - Insert Row] action in save widget.
+  PaymentsRow? newPayment;
 
   @override
   void initState(BuildContext context) {

@@ -3346,7 +3346,31 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                                                             functions.calculateSubtotal(FFAppState().invoiceItems.toList(),
                                                                                 double.tryParse(_model.discountTextController.text)),
                                                                             0.0)),
+                                                                        'isarchive':
+                                                                            false,
                                                                       });
+                                                                      _model.newPayment =
+                                                                          await PaymentsTable()
+                                                                              .insert({
+                                                                        'payment_status':
+                                                                            false,
+                                                                      });
+                                                                      await InvoicesTable()
+                                                                          .update(
+                                                                        data: {
+                                                                          'paymentsReference': _model
+                                                                              .newPayment
+                                                                              ?.id,
+                                                                        },
+                                                                        matchingRows:
+                                                                            (rows) =>
+                                                                                rows.eqOrNull(
+                                                                          'id',
+                                                                          _model
+                                                                              .invoiceNew
+                                                                              ?.id,
+                                                                        ),
+                                                                      );
                                                                       await actions
                                                                           .settoSold(
                                                                         FFAppState()

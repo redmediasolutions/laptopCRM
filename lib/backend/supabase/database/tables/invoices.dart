@@ -79,13 +79,6 @@ class InvoicesRow extends SupabaseDataRow {
   int? get businessRef => getField<int>('business_ref');
   set businessRef(int? value) => setField<int>('business_ref', value);
 
-  String? get paymentMethod => getField<String>('payment_method');
-  set paymentMethod(String? value) => setField<String>('payment_method', value);
-
-  String? get paymentNarration => getField<String>('payment_narration');
-  set paymentNarration(String? value) =>
-      setField<String>('payment_narration', value);
-
   bool? get paymentStatus => getField<bool>('payment_status');
   set paymentStatus(bool? value) => setField<bool>('payment_status', value);
 
@@ -96,4 +89,11 @@ class InvoicesRow extends SupabaseDataRow {
       getField<double>('invoice_grandtotalroundoff');
   set invoiceGrandtotalroundoff(double? value) =>
       setField<double>('invoice_grandtotalroundoff', value);
+
+  bool? get isarchive => getField<bool>('isarchive');
+  set isarchive(bool? value) => setField<bool>('isarchive', value);
+
+  int? get paymentsReference => getField<int>('paymentsReference');
+  set paymentsReference(int? value) =>
+      setField<int>('paymentsReference', value);
 }

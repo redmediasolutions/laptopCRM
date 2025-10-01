@@ -14,10 +14,10 @@ export 'record_payment_model.dart';
 class RecordPaymentWidget extends StatefulWidget {
   const RecordPaymentWidget({
     super.key,
-    this.invoiceId,
+    this.paymentid,
   });
 
-  final int? invoiceId;
+  final int? paymentid;
 
   @override
   State<RecordPaymentWidget> createState() => _RecordPaymentWidgetState();
@@ -588,19 +588,23 @@ class _RecordPaymentWidgetState extends State<RecordPaymentWidget> {
                                       ),
                                       FFButtonWidget(
                                         onPressed: () async {
-                                          await InvoicesTable().update(
+                                          await PaymentsTable().update(
                                             data: {
-                                              'payment_method':
+                                              'payment_mode':
                                                   _model.vendorNameValue,
-                                              'payment_narration': _model
+                                              'payment_amount': double.tryParse(
+                                                  _model
+                                                      .vendorEmailTextController
+                                                      .text),
+                                              'payment_status': true,
+                                              'narration': _model
                                                   .vendorProductTextController
                                                   .text,
-                                              'payment_status': true,
                                             },
                                             matchingRows: (rows) =>
                                                 rows.eqOrNull(
                                               'id',
-                                              widget.invoiceId,
+                                              widget.paymentid,
                                             ),
                                           );
                                           Navigator.pop(context);
