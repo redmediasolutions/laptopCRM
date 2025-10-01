@@ -20,3 +20,4 @@ export 'bulkinsertintostock.dart' show bulkinsertintostock;
 export 'get_product_infofrom_all_stock.dart' show getProductInfofromAllStock;
 export 'setto_sold.dart' show settoSold;
 export 'validate_serial.dart' show validateSerial;
+export 'update_stockwith_invoice_i_d.dart' show updateStockwithInvoiceID;

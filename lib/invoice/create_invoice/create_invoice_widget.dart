@@ -3355,6 +3355,17 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                                                         containerStockRowList
                                                                             .toList(),
                                                                       );
+                                                                      await actions
+                                                                          .updateStockwithInvoiceID(
+                                                                        FFAppState()
+                                                                            .invoiceItems
+                                                                            .toList(),
+                                                                        containerStockRowList
+                                                                            .toList(),
+                                                                        _model
+                                                                            .invoiceNew!
+                                                                            .id,
+                                                                      );
                                                                       ScaffoldMessenger.of(
                                                                               context)
                                                                           .showSnackBar(
