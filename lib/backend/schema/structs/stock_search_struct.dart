@@ -22,7 +22,6 @@ class StockSearchStruct extends BaseStruct {
     int? stockid,
     int? purchaseid,
     String? vendorPhone,
-    int? stockId,
     String? productReference,
   })  : _model = model,
         _productDescription = productDescription,
@@ -39,7 +38,6 @@ class StockSearchStruct extends BaseStruct {
         _stockid = stockid,
         _purchaseid = purchaseid,
         _vendorPhone = vendorPhone,
-        _stockId = stockId,
         _productReference = productReference;
 
   // "model" field.
@@ -151,15 +149,6 @@ class StockSearchStruct extends BaseStruct {
 
   bool hasVendorPhone() => _vendorPhone != null;
 
-  // "stockId" field.
-  int? _stockId;
-  int get stockId => _stockId ?? 0;
-  set stockId(int? val) => _stockId = val;
-
-  void incrementStockId(int amount) => stockId = stockId + amount;
-
-  bool hasStockId() => _stockId != null;
-
   // "productReference" field.
   String? _productReference;
   String get productReference => _productReference ?? '';
@@ -184,7 +173,6 @@ class StockSearchStruct extends BaseStruct {
         stockid: castToType<int>(data['stockid']),
         purchaseid: castToType<int>(data['purchaseid']),
         vendorPhone: data['vendorPhone'] as String?,
-        stockId: castToType<int>(data['stockId']),
         productReference: data['productReference'] as String?,
       );
 
@@ -208,7 +196,6 @@ class StockSearchStruct extends BaseStruct {
         'stockid': _stockid,
         'purchaseid': _purchaseid,
         'vendorPhone': _vendorPhone,
-        'stockId': _stockId,
         'productReference': _productReference,
       }.withoutNulls;
 
@@ -273,10 +260,6 @@ class StockSearchStruct extends BaseStruct {
         'vendorPhone': serializeParam(
           _vendorPhone,
           ParamType.String,
-        ),
-        'stockId': serializeParam(
-          _stockId,
-          ParamType.int,
         ),
         'productReference': serializeParam(
           _productReference,
@@ -361,11 +344,6 @@ class StockSearchStruct extends BaseStruct {
           ParamType.String,
           false,
         ),
-        stockId: deserializeParam(
-          data['stockId'],
-          ParamType.int,
-          false,
-        ),
         productReference: deserializeParam(
           data['productReference'],
           ParamType.String,
@@ -394,7 +372,6 @@ class StockSearchStruct extends BaseStruct {
         stockid == other.stockid &&
         purchaseid == other.purchaseid &&
         vendorPhone == other.vendorPhone &&
-        stockId == other.stockId &&
         productReference == other.productReference;
   }
 
@@ -415,7 +392,6 @@ class StockSearchStruct extends BaseStruct {
         stockid,
         purchaseid,
         vendorPhone,
-        stockId,
         productReference
       ]);
 }
@@ -436,7 +412,6 @@ StockSearchStruct createStockSearchStruct({
   int? stockid,
   int? purchaseid,
   String? vendorPhone,
-  int? stockId,
   String? productReference,
 }) =>
     StockSearchStruct(
@@ -455,6 +430,5 @@ StockSearchStruct createStockSearchStruct({
       stockid: stockid,
       purchaseid: purchaseid,
       vendorPhone: vendorPhone,
-      stockId: stockId,
       productReference: productReference,
     );

@@ -9,23 +9,34 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+//
+import 'package:supabase_flutter/supabase_flutter.dart';
+
 Future<void> settoSold(
   List<InvoiceStruct>? invoiceItems,
   List<StockRow>? stockrow,
 ) async {
   if (invoiceItems == null || stockrow == null) return;
 
-  for (final stock in stockrow) {
-    final match = invoiceItems.any(
-      (invoice) => invoice.stockRef != null && invoice.stockRef == stock.id,
-    );
+  // Collect all stock IDs from invoices
+  final stockIds = invoiceItems
+      .where((invoice) => invoice.stockRef != null)
+      .map((invoice) => invoice.stockRef!)
+      .toList();
 
-    if (match) {
-      await Supabase.instance.client
-          .from('Stock') // your table name
-          .update({'isSold': true})
-          .eq('id', stock.id)
-          .select(); // Required in postgrest >= 2.0.0
-    }
+  if (stockIds.isEmpty) return;
+
+  try {
+    final response = await Supabase.instance.client
+        .from('Stock')
+        .update({'isSold': true})
+        .inFilter('id', stockIds)
+        .select();
+
+    print('Updated stock rows: $response');
+  } on PostgrestException catch (e) {
+    print('Error updating stocks: ${e.message}');
+  } catch (e) {
+    print('Unexpected error: $e');
   }
 }

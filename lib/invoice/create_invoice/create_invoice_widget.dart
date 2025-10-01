@@ -8,6 +8,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
+import '/invoice/additemto_invoice/additemto_invoice_widget.dart';
 import '/invoice/invoice_cost/invoice_cost_widget.dart';
 import '/invoice/invoice_narration/invoice_narration_widget.dart';
 import '/invoice/invoice_quantity/invoice_quantity_widget.dart';
@@ -2290,263 +2291,317 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                                           mainAxisSize:
                                                               MainAxisSize.max,
                                                           children: [
-                                                            Icon(
-                                                              Icons.add,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryText,
-                                                              size: 32.0,
-                                                            ),
-                                                            FutureBuilder<
-                                                                List<
-                                                                    Allstockv2Row>>(
-                                                              future:
-                                                                  Allstockv2Table()
-                                                                      .queryRows(
-                                                                queryFn: (q) => q
-                                                                    .eqOrNull(
-                                                                      'business_id',
-                                                                      FFAppState()
-                                                                          .businessRefID,
-                                                                    )
-                                                                    .eqOrNull(
-                                                                      'isSold',
-                                                                      false,
-                                                                    ),
-                                                              ),
-                                                              builder: (context,
-                                                                  snapshot) {
-                                                                // Customize what your widget looks like when it's loading.
-                                                                if (!snapshot
-                                                                    .hasData) {
-                                                                  return Center(
-                                                                    child:
-                                                                        SizedBox(
-                                                                      width:
-                                                                          50.0,
-                                                                      height:
-                                                                          50.0,
-                                                                      child:
-                                                                          CircularProgressIndicator(
-                                                                        valueColor:
-                                                                            AlwaysStoppedAnimation<Color>(
-                                                                          FlutterFlowTheme.of(context)
-                                                                              .primary,
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  );
-                                                                }
-                                                                List<Allstockv2Row>
-                                                                    addProductsAllstockv2RowList =
-                                                                    snapshot
-                                                                        .data!;
-
-                                                                return FlutterFlowDropDown<
-                                                                    String>(
-                                                                  controller: _model
-                                                                          .addProductsValueController ??=
-                                                                      FormFieldController<
-                                                                          String>(
-                                                                    _model.addProductsValue ??=
-                                                                        '',
-                                                                  ),
-                                                                  options: List<String>.from(addProductsAllstockv2RowList
-                                                                      .map((e) =>
-                                                                          e.stockReference)
-                                                                      .withoutNulls
-                                                                      .toList()),
-                                                                  optionLabels: functions.combineBusinessName(
-                                                                      addProductsAllstockv2RowList
-                                                                          .map((e) => e
-                                                                              .productName)
-                                                                          .withoutNulls
-                                                                          .toList(),
-                                                                      addProductsAllstockv2RowList
-                                                                          .map((e) =>
-                                                                              e.productSerial)
-                                                                          .withoutNulls
-                                                                          .toList())!,
-                                                                  onChanged:
-                                                                      (val) async {
-                                                                    safeSetState(() =>
-                                                                        _model.addProductsValue =
-                                                                            val);
-                                                                    _model.selectedStock =
-                                                                        await actions
-                                                                            .getProductInfofromAllStock(
-                                                                      _model
-                                                                          .addProductsValue!,
-                                                                    );
-                                                                    FFAppState()
-                                                                        .addToInvoiceItems(
-                                                                            InvoiceStruct(
-                                                                      invoiceitemID: _model
-                                                                          .selectedStock
-                                                                          ?.productid
-                                                                          ?.toString(),
-                                                                      invoiceItem: _model
-                                                                          .selectedStock
-                                                                          ?.productName,
-                                                                      invoiceItemConfig: _model
-                                                                          .selectedStock
-                                                                          ?.productConfig,
-                                                                      invoiceItemCost: functions.stringtoDouble(_model
-                                                                          .selectedStock!
-                                                                          .saleprice!),
-                                                                      invoiceItemQuantity:
-                                                                          1,
-                                                                      invoiceAmountBeforeTax:
-                                                                          0.0,
-                                                                      invoiceItemHSN:
-                                                                          '0',
-                                                                      invoiceItemTaxRate:
-                                                                          0.0,
-                                                                      invoiceTaxAmount:
-                                                                          0.0,
-                                                                      invoiceItemAmount: functions.calculateLineTotal(
-                                                                          1,
-                                                                          0.0,
-                                                                          functions.stringtoDouble(_model
-                                                                              .selectedStock!
-                                                                              .saleprice!)),
-                                                                      invoiceItemSerialNo: _model
-                                                                          .selectedStock
-                                                                          ?.productSerial,
-                                                                      invoiceItembarCodeNumber:
-                                                                          '0',
-                                                                      stockRef: _model
-                                                                          .selectedStock
-                                                                          ?.stockId,
-                                                                    ));
-                                                                    safeSetState(
-                                                                        () {});
-                                                                    await Future
-                                                                        .delayed(
-                                                                      Duration(
-                                                                        milliseconds:
-                                                                            400,
-                                                                      ),
-                                                                    );
-                                                                    safeSetState(
-                                                                        () {
-                                                                      _model
-                                                                          .addProductsValueController
-                                                                          ?.reset();
-                                                                    });
-
-                                                                    safeSetState(
-                                                                        () {});
-                                                                  },
-                                                                  width: 285.38,
-                                                                  height: 40.0,
-                                                                  searchHintTextStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .labelMedium
-                                                                      .override(
-                                                                        font: GoogleFonts
-                                                                            .inter(
-                                                                          fontWeight: FlutterFlowTheme.of(context)
-                                                                              .labelMedium
-                                                                              .fontWeight,
-                                                                          fontStyle: FlutterFlowTheme.of(context)
-                                                                              .labelMedium
-                                                                              .fontStyle,
-                                                                        ),
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight: FlutterFlowTheme.of(context)
-                                                                            .labelMedium
-                                                                            .fontWeight,
-                                                                        fontStyle: FlutterFlowTheme.of(context)
-                                                                            .labelMedium
-                                                                            .fontStyle,
-                                                                      ),
-                                                                  searchTextStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .override(
-                                                                        font: GoogleFonts
-                                                                            .inter(
-                                                                          fontWeight: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .fontWeight,
-                                                                          fontStyle: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .fontStyle,
-                                                                        ),
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight: FlutterFlowTheme.of(context)
-                                                                            .bodyMedium
-                                                                            .fontWeight,
-                                                                        fontStyle: FlutterFlowTheme.of(context)
-                                                                            .bodyMedium
-                                                                            .fontStyle,
-                                                                      ),
-                                                                  textStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .override(
-                                                                        font: GoogleFonts
-                                                                            .inter(
-                                                                          fontWeight: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .fontWeight,
-                                                                          fontStyle: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .fontStyle,
-                                                                        ),
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight: FlutterFlowTheme.of(context)
-                                                                            .bodyMedium
-                                                                            .fontWeight,
-                                                                        fontStyle: FlutterFlowTheme.of(context)
-                                                                            .bodyMedium
-                                                                            .fontStyle,
-                                                                      ),
-                                                                  hintText:
-                                                                      'Select...',
-                                                                  searchHintText:
-                                                                      'Search...',
-                                                                  icon: Icon(
-                                                                    Icons
-                                                                        .keyboard_arrow_down_rounded,
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .secondaryText,
-                                                                    size: 24.0,
-                                                                  ),
-                                                                  fillColor: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryBackground,
-                                                                  elevation:
-                                                                      2.0,
-                                                                  borderColor:
-                                                                      Colors
-                                                                          .transparent,
-                                                                  borderWidth:
-                                                                      0.0,
-                                                                  borderRadius:
-                                                                      8.0,
-                                                                  margin: EdgeInsetsDirectional
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          12.0,
+                                                                          20.0,
                                                                           0.0,
-                                                                          12.0,
+                                                                          0.0,
                                                                           0.0),
-                                                                  hidesUnderline:
-                                                                      true,
-                                                                  isOverButton:
-                                                                      false,
-                                                                  isSearchable:
-                                                                      true,
-                                                                  isMultiSelect:
-                                                                      false,
-                                                                );
-                                                              },
+                                                              child:
+                                                                  FlutterFlowIconButton(
+                                                                borderRadius:
+                                                                    8.0,
+                                                                buttonSize:
+                                                                    40.0,
+                                                                fillColor: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText,
+                                                                icon: Icon(
+                                                                  Icons.add_box,
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .info,
+                                                                  size: 24.0,
+                                                                ),
+                                                                onPressed:
+                                                                    () async {
+                                                                  await showModalBottomSheet(
+                                                                    isScrollControlled:
+                                                                        true,
+                                                                    backgroundColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    enableDrag:
+                                                                        false,
+                                                                    context:
+                                                                        context,
+                                                                    builder:
+                                                                        (context) {
+                                                                      return GestureDetector(
+                                                                        onTap:
+                                                                            () {
+                                                                          FocusScope.of(context)
+                                                                              .unfocus();
+                                                                          FocusManager
+                                                                              .instance
+                                                                              .primaryFocus
+                                                                              ?.unfocus();
+                                                                        },
+                                                                        child:
+                                                                            Padding(
+                                                                          padding:
+                                                                              MediaQuery.viewInsetsOf(context),
+                                                                          child:
+                                                                              AdditemtoInvoiceWidget(),
+                                                                        ),
+                                                                      );
+                                                                    },
+                                                                  ).then((value) =>
+                                                                      safeSetState(
+                                                                          () {}));
+                                                                },
+                                                              ),
                                                             ),
+                                                            if (responsiveVisibility(
+                                                              context: context,
+                                                              desktop: false,
+                                                            ))
+                                                              FutureBuilder<
+                                                                  List<
+                                                                      Allstockv2Row>>(
+                                                                future:
+                                                                    Allstockv2Table()
+                                                                        .queryRows(
+                                                                  queryFn: (q) => q
+                                                                      .eqOrNull(
+                                                                        'business_id',
+                                                                        FFAppState()
+                                                                            .businessRefID,
+                                                                      )
+                                                                      .eqOrNull(
+                                                                        'isSold',
+                                                                        false,
+                                                                      ),
+                                                                ),
+                                                                builder: (context,
+                                                                    snapshot) {
+                                                                  // Customize what your widget looks like when it's loading.
+                                                                  if (!snapshot
+                                                                      .hasData) {
+                                                                    return Center(
+                                                                      child:
+                                                                          SizedBox(
+                                                                        width:
+                                                                            50.0,
+                                                                        height:
+                                                                            50.0,
+                                                                        child:
+                                                                            CircularProgressIndicator(
+                                                                          valueColor:
+                                                                              AlwaysStoppedAnimation<Color>(
+                                                                            FlutterFlowTheme.of(context).primary,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    );
+                                                                  }
+                                                                  List<Allstockv2Row>
+                                                                      addProductsAllstockv2RowList =
+                                                                      snapshot
+                                                                          .data!;
+
+                                                                  return FlutterFlowDropDown<
+                                                                      String>(
+                                                                    controller: _model
+                                                                            .addProductsValueController ??=
+                                                                        FormFieldController<
+                                                                            String>(
+                                                                      _model.addProductsValue ??=
+                                                                          '',
+                                                                    ),
+                                                                    options: List<String>.from(addProductsAllstockv2RowList
+                                                                        .map((e) =>
+                                                                            e.stockReference)
+                                                                        .withoutNulls
+                                                                        .toList()),
+                                                                    optionLabels: functions.combineBusinessName(
+                                                                        addProductsAllstockv2RowList
+                                                                            .map((e) => e
+                                                                                .productName)
+                                                                            .withoutNulls
+                                                                            .toList(),
+                                                                        addProductsAllstockv2RowList
+                                                                            .map((e) =>
+                                                                                e.productSerial)
+                                                                            .withoutNulls
+                                                                            .toList())!,
+                                                                    onChanged:
+                                                                        (val) async {
+                                                                      safeSetState(() =>
+                                                                          _model.addProductsValue =
+                                                                              val);
+                                                                      _model.selectedStock =
+                                                                          await actions
+                                                                              .getProductInfofromAllStock(
+                                                                        _model
+                                                                            .addProductsValue!,
+                                                                      );
+                                                                      FFAppState()
+                                                                          .addToInvoiceItems(
+                                                                              InvoiceStruct(
+                                                                        invoiceitemID: _model
+                                                                            .selectedStock
+                                                                            ?.productid
+                                                                            ?.toString(),
+                                                                        invoiceItem: _model
+                                                                            .selectedStock
+                                                                            ?.productName,
+                                                                        invoiceItemConfig: _model
+                                                                            .selectedStock
+                                                                            ?.productConfig,
+                                                                        invoiceItemCost: functions.stringtoDouble(_model
+                                                                            .selectedStock!
+                                                                            .saleprice!),
+                                                                        invoiceItemQuantity:
+                                                                            1,
+                                                                        invoiceAmountBeforeTax:
+                                                                            0.0,
+                                                                        invoiceItemHSN:
+                                                                            '0',
+                                                                        invoiceItemTaxRate:
+                                                                            0.0,
+                                                                        invoiceTaxAmount:
+                                                                            0.0,
+                                                                        invoiceItemAmount: functions.calculateLineTotal(
+                                                                            1,
+                                                                            0.0,
+                                                                            functions.stringtoDouble(_model.selectedStock!.saleprice!)),
+                                                                        invoiceItemSerialNo: _model
+                                                                            .selectedStock
+                                                                            ?.productSerial,
+                                                                        invoiceItembarCodeNumber:
+                                                                            '0',
+                                                                        stockRef: _model
+                                                                            .selectedStock
+                                                                            ?.stockId,
+                                                                      ));
+                                                                      safeSetState(
+                                                                          () {});
+                                                                      await Future
+                                                                          .delayed(
+                                                                        Duration(
+                                                                          milliseconds:
+                                                                              400,
+                                                                        ),
+                                                                      );
+                                                                      safeSetState(
+                                                                          () {
+                                                                        _model
+                                                                            .addProductsValueController
+                                                                            ?.reset();
+                                                                      });
+
+                                                                      safeSetState(
+                                                                          () {});
+                                                                    },
+                                                                    width:
+                                                                        285.38,
+                                                                    height:
+                                                                        40.0,
+                                                                    searchHintTextStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .labelMedium
+                                                                        .override(
+                                                                          font:
+                                                                              GoogleFonts.inter(
+                                                                            fontWeight:
+                                                                                FlutterFlowTheme.of(context).labelMedium.fontWeight,
+                                                                            fontStyle:
+                                                                                FlutterFlowTheme.of(context).labelMedium.fontStyle,
+                                                                          ),
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                          fontWeight: FlutterFlowTheme.of(context)
+                                                                              .labelMedium
+                                                                              .fontWeight,
+                                                                          fontStyle: FlutterFlowTheme.of(context)
+                                                                              .labelMedium
+                                                                              .fontStyle,
+                                                                        ),
+                                                                    searchTextStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          font:
+                                                                              GoogleFonts.inter(
+                                                                            fontWeight:
+                                                                                FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                                                                            fontStyle:
+                                                                                FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                          ),
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                          fontWeight: FlutterFlowTheme.of(context)
+                                                                              .bodyMedium
+                                                                              .fontWeight,
+                                                                          fontStyle: FlutterFlowTheme.of(context)
+                                                                              .bodyMedium
+                                                                              .fontStyle,
+                                                                        ),
+                                                                    textStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          font:
+                                                                              GoogleFonts.inter(
+                                                                            fontWeight:
+                                                                                FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                                                                            fontStyle:
+                                                                                FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                          ),
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                          fontWeight: FlutterFlowTheme.of(context)
+                                                                              .bodyMedium
+                                                                              .fontWeight,
+                                                                          fontStyle: FlutterFlowTheme.of(context)
+                                                                              .bodyMedium
+                                                                              .fontStyle,
+                                                                        ),
+                                                                    hintText:
+                                                                        'Select...',
+                                                                    searchHintText:
+                                                                        'Search...',
+                                                                    icon: Icon(
+                                                                      Icons
+                                                                          .keyboard_arrow_down_rounded,
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .secondaryText,
+                                                                      size:
+                                                                          24.0,
+                                                                    ),
+                                                                    fillColor: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .secondaryBackground,
+                                                                    elevation:
+                                                                        2.0,
+                                                                    borderColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    borderWidth:
+                                                                        0.0,
+                                                                    borderRadius:
+                                                                        8.0,
+                                                                    margin: EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            12.0,
+                                                                            0.0,
+                                                                            12.0,
+                                                                            0.0),
+                                                                    hidesUnderline:
+                                                                        true,
+                                                                    isOverButton:
+                                                                        false,
+                                                                    isSearchable:
+                                                                        true,
+                                                                    isMultiSelect:
+                                                                        false,
+                                                                  );
+                                                                },
+                                                              ),
                                                           ],
                                                         ),
                                                       ),
