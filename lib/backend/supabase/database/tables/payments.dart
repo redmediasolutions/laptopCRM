@@ -34,4 +34,11 @@ class PaymentsRow extends SupabaseDataRow {
 
   bool? get paymentStatus => getField<bool>('payment_status');
   set paymentStatus(bool? value) => setField<bool>('payment_status', value);
+
+  int? get invoiceReference => getField<int>('invoice_reference');
+  set invoiceReference(int? value) => setField<int>('invoice_reference', value);
+
+  int? get businessReference => getField<int>('business_reference');
+  set businessReference(int? value) =>
+      setField<int>('business_reference', value);
 }

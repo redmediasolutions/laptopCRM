@@ -92,8 +92,4 @@ class InvoicesRow extends SupabaseDataRow {
 
   bool? get isarchive => getField<bool>('isarchive');
   set isarchive(bool? value) => setField<bool>('isarchive', value);
-
-  int? get paymentsReference => getField<int>('paymentsReference');
-  set paymentsReference(int? value) =>
-      setField<int>('paymentsReference', value);
 }

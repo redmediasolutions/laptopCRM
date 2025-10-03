@@ -8,16 +8,17 @@ import '/flutter_flow/form_field_controller.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'record_payment_model.dart';
 export 'record_payment_model.dart';
 
 class RecordPaymentWidget extends StatefulWidget {
   const RecordPaymentWidget({
     super.key,
-    this.paymentid,
+    this.invoiceId,
   });
 
-  final int? paymentid;
+  final int? invoiceId;
 
   @override
   State<RecordPaymentWidget> createState() => _RecordPaymentWidgetState();
@@ -55,6 +56,8 @@ class _RecordPaymentWidgetState extends State<RecordPaymentWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Align(
       alignment: AlignmentDirectional(0.0, 0.0),
       child: ClipRRect(
@@ -588,25 +591,21 @@ class _RecordPaymentWidgetState extends State<RecordPaymentWidget> {
                                       ),
                                       FFButtonWidget(
                                         onPressed: () async {
-                                          await PaymentsTable().update(
-                                            data: {
-                                              'payment_mode':
-                                                  _model.vendorNameValue,
-                                              'payment_amount': double.tryParse(
-                                                  _model
-                                                      .vendorEmailTextController
-                                                      .text),
-                                              'payment_status': true,
-                                              'narration': _model
-                                                  .vendorProductTextController
-                                                  .text,
-                                            },
-                                            matchingRows: (rows) =>
-                                                rows.eqOrNull(
-                                              'id',
-                                              widget.paymentid,
-                                            ),
-                                          );
+                                          await PaymentsTable().insert({
+                                            'payment_mode':
+                                                _model.vendorNameValue,
+                                            'payment_amount': double.tryParse(
+                                                _model.vendorEmailTextController
+                                                    .text),
+                                            'payment_status': true,
+                                            'narration': _model
+                                                .vendorProductTextController
+                                                .text,
+                                            'invoice_reference':
+                                                widget.invoiceId,
+                                            'business_reference':
+                                                FFAppState().businessRefID,
+                                          });
                                           Navigator.pop(context);
                                         },
                                         text: 'Update Payment',

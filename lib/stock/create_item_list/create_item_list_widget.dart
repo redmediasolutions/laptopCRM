@@ -604,7 +604,12 @@ class _CreateItemListWidgetState extends State<CreateItemListWidget>
                                                             future:
                                                                 VendorsTable()
                                                                     .queryRows(
-                                                              queryFn: (q) => q,
+                                                              queryFn: (q) =>
+                                                                  q.eqOrNull(
+                                                                'business_ref',
+                                                                FFAppState()
+                                                                    .businessRefID,
+                                                              ),
                                                             ),
                                                             builder: (context,
                                                                 snapshot) {

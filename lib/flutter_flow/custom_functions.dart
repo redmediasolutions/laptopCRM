@@ -588,3 +588,47 @@ int? increment(int? index) {
   }
   return index + 1; // Increment the index by 1
 }
+
+double? calculateTotal(List<PaymentsRow>? listofPayments) {
+  if (listofPayments == null || listofPayments.isEmpty) {
+    return 0.0;
+  }
+
+  double total = 0.0;
+  for (final payment in listofPayments) {
+    total += (payment.paymentAmount ?? 0.0);
+  }
+  return total;
+}
+
+String? incrementInvoiceNumber(List<AllInvoicesRow>? invoicenumber) {
+  if (invoicenumber == null || invoicenumber.isEmpty) {
+    return '001';
+  }
+
+  // Get the invoice with the highest invoice_id (latest)
+  final latestRow = invoicenumber.reduce((a, b) {
+    final aId = (a as dynamic).invoiceId ?? 0;
+    final bId = (b as dynamic).invoiceId ?? 0;
+    return (aId > bId) ? a : b;
+  });
+
+  // Extract last invoice number string
+  final lastNumberStr = (latestRow as dynamic).invNumber ?? 'INV-000';
+
+  // Extract numeric part from the invoice string
+  final match = RegExp(r'(\d+)$').firstMatch(lastNumberStr);
+  int number = 0;
+  if (match != null) {
+    number = int.tryParse(match.group(1)!) ?? 0;
+  } else {
+    final parts = lastNumberStr.split('-');
+    if (parts.isNotEmpty) {
+      number = int.tryParse(parts.last) ?? 0;
+    }
+  }
+
+  // Increment and return only the last 3 digits
+  final newNumber = number + 1;
+  return newNumber.toString().padLeft(3, '0');
+}

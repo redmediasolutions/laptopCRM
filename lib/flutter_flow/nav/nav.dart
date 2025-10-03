@@ -102,7 +102,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: StockDashboardWidget.routeName,
           path: StockDashboardWidget.routePath,
-          builder: (context, params) => StockDashboardWidget(),
+          builder: (context, params) => StockDashboardWidget(
+            searchTerm: params.getParam(
+              'searchTerm',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
           name: CreateAccountWidget.routeName,

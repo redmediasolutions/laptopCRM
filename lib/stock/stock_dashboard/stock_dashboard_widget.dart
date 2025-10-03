@@ -11,6 +11,7 @@ import '/stock/stocklistsearchcomponent/stocklistsearchcomponent_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -19,7 +20,12 @@ import 'stock_dashboard_model.dart';
 export 'stock_dashboard_model.dart';
 
 class StockDashboardWidget extends StatefulWidget {
-  const StockDashboardWidget({super.key});
+  const StockDashboardWidget({
+    super.key,
+    this.searchTerm,
+  });
+
+  final String? searchTerm;
 
   static String routeName = 'StockDashboard';
   static String routePath = '/stockDashboard';
@@ -37,6 +43,21 @@ class _StockDashboardWidgetState extends State<StockDashboardWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => StockDashboardModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if (widget.searchTerm != null && widget.searchTerm != '') {
+        _model.searchInput = widget.searchTerm!;
+        safeSetState(() {});
+        await Future.delayed(
+          Duration(
+            milliseconds: 100,
+          ),
+        );
+        _model.search = true;
+        safeSetState(() {});
+      }
+    });
 
     _model.searchInputTextController ??= TextEditingController();
     _model.searchInputFocusNode ??= FocusNode();

@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/master_products/update_product/update_product_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
+import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'master_product_list_model.dart';
@@ -97,23 +98,40 @@ class _MasterProductListWidgetState extends State<MasterProductListWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      widget.parameter1!,
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            font: GoogleFonts.inter(
+                    InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        context.pushNamed(
+                          StockDashboardWidget.routeName,
+                          queryParameters: {
+                            'searchTerm': serializeParam(
+                              widget.parameter1,
+                              ParamType.String,
+                            ),
+                          }.withoutNulls,
+                        );
+                      },
+                      child: Text(
+                        widget.parameter1!,
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              font: GoogleFonts.inter(
+                                fontWeight: FontWeight.w500,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .fontStyle,
+                              ),
+                              color: FlutterFlowTheme.of(context).alternate,
+                              fontSize: 14.0,
+                              letterSpacing: 0.0,
                               fontWeight: FontWeight.w500,
                               fontStyle: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .fontStyle,
                             ),
-                            color: FlutterFlowTheme.of(context).alternate,
-                            fontSize: 14.0,
-                            letterSpacing: 0.0,
-                            fontWeight: FontWeight.w500,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontStyle,
-                          ),
+                      ),
                     ),
                   ],
                 ),
@@ -222,26 +240,45 @@ class _MasterProductListWidgetState extends State<MasterProductListWidget> {
                       }
                       List<StockRow> textStockRowList = snapshot.data!;
 
-                      return Text(
-                        valueOrDefault<String>(
-                          textStockRowList.length.toString(),
-                          'NA',
-                        ),
-                        style: FlutterFlowTheme.of(context).titleLarge.override(
-                              font: GoogleFonts.interTight(
+                      return InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () async {
+                          context.pushNamed(
+                            StockDashboardWidget.routeName,
+                            queryParameters: {
+                              'searchTerm': serializeParam(
+                                widget.parameter1,
+                                ParamType.String,
+                              ),
+                            }.withoutNulls,
+                          );
+                        },
+                        child: Text(
+                          valueOrDefault<String>(
+                            textStockRowList.length.toString(),
+                            'NA',
+                          ),
+                          style: FlutterFlowTheme.of(context)
+                              .titleLarge
+                              .override(
+                                font: GoogleFonts.interTight(
+                                  fontWeight: FontWeight.w500,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .titleLarge
+                                      .fontStyle,
+                                ),
+                                color: FlutterFlowTheme.of(context).alternate,
+                                fontSize: 14.0,
+                                letterSpacing: 0.0,
                                 fontWeight: FontWeight.w500,
                                 fontStyle: FlutterFlowTheme.of(context)
                                     .titleLarge
                                     .fontStyle,
                               ),
-                              color: FlutterFlowTheme.of(context).alternate,
-                              fontSize: 14.0,
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.w500,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .titleLarge
-                                  .fontStyle,
-                            ),
+                        ),
                       );
                     },
                   ),

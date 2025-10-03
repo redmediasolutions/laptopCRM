@@ -86,10 +86,4 @@ class AllInvoicesRow extends SupabaseDataRow {
 
   bool? get isarchive => getField<bool>('isarchive');
   set isarchive(bool? value) => setField<bool>('isarchive', value);
-
-  int? get paymentid => getField<int>('paymentid');
-  set paymentid(int? value) => setField<int>('paymentid', value);
-
-  bool? get paymentstatus => getField<bool>('paymentstatus');
-  set paymentstatus(bool? value) => setField<bool>('paymentstatus', value);
 }
