@@ -21,3 +21,7 @@ export 'get_product_infofrom_all_stock.dart' show getProductInfofromAllStock;
 export 'setto_sold.dart' show settoSold;
 export 'validate_serial.dart' show validateSerial;
 export 'update_stockwith_invoice_i_d.dart' show updateStockwithInvoiceID;
+export 'get_yesterday_date_time.dart' show getYesterdayDateTime;
+export 'get_startof_this_week.dart' show getStartofThisWeek;
+export 'get_startof_this_month.dart' show getStartofThisMonth;
+export 'setto_instock.dart' show settoInstock;

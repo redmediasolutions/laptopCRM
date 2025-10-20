@@ -7,6 +7,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/invoice/generate_barcode/generate_barcode_widget.dart';
 import '/invoice/record_payment/record_payment_widget.dart';
+import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
@@ -871,200 +872,230 @@ class _InvoicesWidgetState extends State<InvoicesWidget> {
                                                               ),
                                                               Expanded(
                                                                 flex: 2,
-                                                                child: Row(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .max,
-                                                                  children: [
-                                                                    FutureBuilder<
-                                                                        List<
-                                                                            PaymentsRow>>(
-                                                                      future: PaymentsTable()
-                                                                          .queryRows(
-                                                                        queryFn: (q) => q
-                                                                            .eqOrNull(
-                                                                              'business_reference',
-                                                                              FFAppState().businessRefID,
-                                                                            )
-                                                                            .eqOrNull(
-                                                                              'invoice_reference',
-                                                                              listViewAllInvoicesRow.invoiceId,
+                                                                child: FutureBuilder<
+                                                                    List<
+                                                                        StockRow>>(
+                                                                  future: StockTable()
+                                                                      .queryRows(
+                                                                    queryFn: (q) =>
+                                                                        q.eqOrNull(
+                                                                      'business_ref',
+                                                                      FFAppState()
+                                                                          .businessRefID,
+                                                                    ),
+                                                                  ),
+                                                                  builder: (context,
+                                                                      snapshot) {
+                                                                    // Customize what your widget looks like when it's loading.
+                                                                    if (!snapshot
+                                                                        .hasData) {
+                                                                      return Center(
+                                                                        child:
+                                                                            SizedBox(
+                                                                          width:
+                                                                              50.0,
+                                                                          height:
+                                                                              50.0,
+                                                                          child:
+                                                                              CircularProgressIndicator(
+                                                                            valueColor:
+                                                                                AlwaysStoppedAnimation<Color>(
+                                                                              FlutterFlowTheme.of(context).primary,
                                                                             ),
-                                                                      ),
-                                                                      builder:
-                                                                          (context,
-                                                                              snapshot) {
-                                                                        // Customize what your widget looks like when it's loading.
-                                                                        if (!snapshot
-                                                                            .hasData) {
-                                                                          return Center(
-                                                                            child:
-                                                                                SizedBox(
-                                                                              width: 50.0,
-                                                                              height: 50.0,
-                                                                              child: CircularProgressIndicator(
-                                                                                valueColor: AlwaysStoppedAnimation<Color>(
-                                                                                  FlutterFlowTheme.of(context).primary,
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                          );
-                                                                        }
-                                                                        List<PaymentsRow>
-                                                                            conditionalBuilderPaymentsRowList =
-                                                                            snapshot.data!;
+                                                                          ),
+                                                                        ),
+                                                                      );
+                                                                    }
+                                                                    List<StockRow>
+                                                                        containerStockRowList =
+                                                                        snapshot
+                                                                            .data!;
 
-                                                                        return Builder(
-                                                                          builder:
-                                                                              (context) {
-                                                                            if (functions.calculateTotal(conditionalBuilderPaymentsRowList.toList()) ==
-                                                                                listViewAllInvoicesRow.invoicesGrandTotal) {
-                                                                              return Align(
-                                                                                alignment: AlignmentDirectional(0.0, 0.0),
-                                                                                child: Container(
-                                                                                  decoration: BoxDecoration(
-                                                                                    color: Color(0xFF036C23),
-                                                                                    borderRadius: BorderRadius.circular(12.0),
-                                                                                  ),
-                                                                                  child: Padding(
-                                                                                    padding: EdgeInsets.all(8.0),
-                                                                                    child: Text(
-                                                                                      'Paid',
-                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                            font: GoogleFonts.inter(
-                                                                                              fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                            ),
-                                                                                            color: FlutterFlowTheme.of(context).alternate,
-                                                                                            letterSpacing: 0.0,
-                                                                                            fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                                            fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                          ),
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              );
-                                                                            } else if (functions.calculateTotal(conditionalBuilderPaymentsRowList.toList()) == 0.0) {
-                                                                              return Align(
-                                                                                alignment: AlignmentDirectional(0.0, 0.0),
-                                                                                child: Container(
-                                                                                  decoration: BoxDecoration(
-                                                                                    color: Color(0xFF720418),
-                                                                                    borderRadius: BorderRadius.circular(12.0),
-                                                                                  ),
-                                                                                  child: Padding(
-                                                                                    padding: EdgeInsets.all(8.0),
-                                                                                    child: Text(
-                                                                                      'Not Paid',
-                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                            font: GoogleFonts.inter(
-                                                                                              fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                            ),
-                                                                                            color: FlutterFlowTheme.of(context).alternate,
-                                                                                            letterSpacing: 0.0,
-                                                                                            fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                                            fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                          ),
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              );
-                                                                            } else {
-                                                                              return Align(
-                                                                                alignment: AlignmentDirectional(0.0, 0.0),
-                                                                                child: Container(
-                                                                                  decoration: BoxDecoration(
-                                                                                    color: FlutterFlowTheme.of(context).primary,
-                                                                                    borderRadius: BorderRadius.circular(12.0),
-                                                                                  ),
-                                                                                  child: Padding(
-                                                                                    padding: EdgeInsets.all(8.0),
-                                                                                    child: Text(
-                                                                                      'Partially Paid',
-                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                            font: GoogleFonts.inter(
-                                                                                              fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                            ),
-                                                                                            color: FlutterFlowTheme.of(context).primaryText,
-                                                                                            letterSpacing: 0.0,
-                                                                                            fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                                            fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                          ),
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              );
-                                                                            }
-                                                                          },
-                                                                        );
-                                                                      },
-                                                                    ),
-                                                                    InkWell(
-                                                                      splashColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      focusColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      hoverColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      highlightColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      onTap:
-                                                                          () async {
-                                                                        var confirmDialogResponse = await showDialog<bool>(
-                                                                              context: context,
-                                                                              builder: (alertDialogContext) {
-                                                                                return AlertDialog(
-                                                                                  title: Text('Confirm Action'),
-                                                                                  content: Text('Are you sure you want to archive this invoice ?'),
-                                                                                  actions: [
-                                                                                    TextButton(
-                                                                                      onPressed: () => Navigator.pop(alertDialogContext, false),
-                                                                                      child: Text('Cancel'),
-                                                                                    ),
-                                                                                    TextButton(
-                                                                                      onPressed: () => Navigator.pop(alertDialogContext, true),
-                                                                                      child: Text('Confirm'),
-                                                                                    ),
-                                                                                  ],
-                                                                                );
-                                                                              },
-                                                                            ) ??
-                                                                            false;
-                                                                        if (confirmDialogResponse) {
-                                                                          await InvoicesTable()
-                                                                              .update(
-                                                                            data: {
-                                                                              'isarchive': true,
-                                                                            },
-                                                                            matchingRows: (rows) =>
-                                                                                rows.eqOrNull(
-                                                                              'id',
-                                                                              listViewAllInvoicesRow.invoiceId,
-                                                                            ),
-                                                                          );
-                                                                          safeSetState(() =>
-                                                                              _model.requestCompleter2 = null);
-                                                                        }
-                                                                      },
+                                                                    return Container(
+                                                                      decoration:
+                                                                          BoxDecoration(),
                                                                       child:
-                                                                          Icon(
-                                                                        Icons
-                                                                            .delete_sharp,
-                                                                        color: Color(
-                                                                            0xFFF4F6FA),
-                                                                        size:
-                                                                            24.0,
+                                                                          Row(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.max,
+                                                                        children:
+                                                                            [
+                                                                          FutureBuilder<
+                                                                              List<PaymentsRow>>(
+                                                                            future:
+                                                                                PaymentsTable().queryRows(
+                                                                              queryFn: (q) => q
+                                                                                  .eqOrNull(
+                                                                                    'business_reference',
+                                                                                    FFAppState().businessRefID,
+                                                                                  )
+                                                                                  .eqOrNull(
+                                                                                    'invoice_reference',
+                                                                                    listViewAllInvoicesRow.invoiceId,
+                                                                                  ),
+                                                                            ),
+                                                                            builder:
+                                                                                (context, snapshot) {
+                                                                              // Customize what your widget looks like when it's loading.
+                                                                              if (!snapshot.hasData) {
+                                                                                return Center(
+                                                                                  child: SizedBox(
+                                                                                    width: 50.0,
+                                                                                    height: 50.0,
+                                                                                    child: CircularProgressIndicator(
+                                                                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                                                                        FlutterFlowTheme.of(context).primary,
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              }
+                                                                              List<PaymentsRow> conditionalBuilderPaymentsRowList = snapshot.data!;
+
+                                                                              return Builder(
+                                                                                builder: (context) {
+                                                                                  if (functions.calculateTotal(conditionalBuilderPaymentsRowList.toList()) == listViewAllInvoicesRow.invoicesGrandTotal) {
+                                                                                    return Align(
+                                                                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                                                                      child: Container(
+                                                                                        decoration: BoxDecoration(
+                                                                                          color: Color(0xFF036C23),
+                                                                                          borderRadius: BorderRadius.circular(12.0),
+                                                                                        ),
+                                                                                        child: Padding(
+                                                                                          padding: EdgeInsets.all(8.0),
+                                                                                          child: Text(
+                                                                                            'Paid',
+                                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                  font: GoogleFonts.inter(
+                                                                                                    fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                                                                                                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                                  ),
+                                                                                                  color: FlutterFlowTheme.of(context).alternate,
+                                                                                                  letterSpacing: 0.0,
+                                                                                                  fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                                                                                                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                                ),
+                                                                                          ),
+                                                                                        ),
+                                                                                      ),
+                                                                                    );
+                                                                                  } else if (functions.calculateTotal(conditionalBuilderPaymentsRowList.toList()) == 0.0) {
+                                                                                    return Align(
+                                                                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                                                                      child: Container(
+                                                                                        decoration: BoxDecoration(
+                                                                                          color: Color(0xFF720418),
+                                                                                          borderRadius: BorderRadius.circular(12.0),
+                                                                                        ),
+                                                                                        child: Padding(
+                                                                                          padding: EdgeInsets.all(8.0),
+                                                                                          child: Text(
+                                                                                            'Not Paid',
+                                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                  font: GoogleFonts.inter(
+                                                                                                    fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                                                                                                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                                  ),
+                                                                                                  color: FlutterFlowTheme.of(context).alternate,
+                                                                                                  letterSpacing: 0.0,
+                                                                                                  fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                                                                                                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                                ),
+                                                                                          ),
+                                                                                        ),
+                                                                                      ),
+                                                                                    );
+                                                                                  } else {
+                                                                                    return Align(
+                                                                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                                                                      child: Container(
+                                                                                        decoration: BoxDecoration(
+                                                                                          color: FlutterFlowTheme.of(context).primary,
+                                                                                          borderRadius: BorderRadius.circular(12.0),
+                                                                                        ),
+                                                                                        child: Padding(
+                                                                                          padding: EdgeInsets.all(8.0),
+                                                                                          child: Text(
+                                                                                            'Partially Paid',
+                                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                  font: GoogleFonts.inter(
+                                                                                                    fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                                                                                                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                                  ),
+                                                                                                  color: FlutterFlowTheme.of(context).primaryText,
+                                                                                                  letterSpacing: 0.0,
+                                                                                                  fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                                                                                                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                                ),
+                                                                                          ),
+                                                                                        ),
+                                                                                      ),
+                                                                                    );
+                                                                                  }
+                                                                                },
+                                                                              );
+                                                                            },
+                                                                          ),
+                                                                          InkWell(
+                                                                            splashColor:
+                                                                                Colors.transparent,
+                                                                            focusColor:
+                                                                                Colors.transparent,
+                                                                            hoverColor:
+                                                                                Colors.transparent,
+                                                                            highlightColor:
+                                                                                Colors.transparent,
+                                                                            onTap:
+                                                                                () async {
+                                                                              var confirmDialogResponse = await showDialog<bool>(
+                                                                                    context: context,
+                                                                                    builder: (alertDialogContext) {
+                                                                                      return AlertDialog(
+                                                                                        title: Text('Confirm Action'),
+                                                                                        content: Text('Are you sure you want to archive this invoice ?'),
+                                                                                        actions: [
+                                                                                          TextButton(
+                                                                                            onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                            child: Text('Cancel'),
+                                                                                          ),
+                                                                                          TextButton(
+                                                                                            onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                            child: Text('Confirm'),
+                                                                                          ),
+                                                                                        ],
+                                                                                      );
+                                                                                    },
+                                                                                  ) ??
+                                                                                  false;
+                                                                              if (confirmDialogResponse) {
+                                                                                await actions.settoInstock(
+                                                                                  listViewAllInvoicesRow.invoiceitems!,
+                                                                                  containerStockRowList.toList(),
+                                                                                );
+                                                                                await InvoicesTable().update(
+                                                                                  data: {
+                                                                                    'isarchive': true,
+                                                                                  },
+                                                                                  matchingRows: (rows) => rows.eqOrNull(
+                                                                                    'id',
+                                                                                    listViewAllInvoicesRow.invoiceId,
+                                                                                  ),
+                                                                                );
+                                                                                safeSetState(() => _model.requestCompleter2 = null);
+                                                                              }
+                                                                            },
+                                                                            child:
+                                                                                Icon(
+                                                                              Icons.delete_sharp,
+                                                                              color: Color(0xFFF4F6FA),
+                                                                              size: 24.0,
+                                                                            ),
+                                                                          ),
+                                                                        ].divide(SizedBox(width: 10.0)),
                                                                       ),
-                                                                    ),
-                                                                  ].divide(SizedBox(
-                                                                      width:
-                                                                          10.0)),
+                                                                    );
+                                                                  },
                                                                 ),
                                                               ),
                                                             ],

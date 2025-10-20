@@ -632,3 +632,271 @@ String? incrementInvoiceNumber(List<AllInvoicesRow>? invoicenumber) {
   final newNumber = number + 1;
   return newNumber.toString().padLeft(3, '0');
 }
+
+int? itemsSoldorNotsold(
+  List<Allstockv2Row> list,
+  bool? isSold,
+) {
+  if (list.isEmpty) return 0;
+
+  // Filter items based on the isSold flag and count them
+  final count = list.where((item) => item.isSold == isSold).length;
+
+  return count;
+}
+
+double? valueofProducts(
+  bool? isSold,
+  List<Allstockv2Row> allstock,
+) {
+  if (allstock.isEmpty) return 0;
+
+  final totalValue = allstock
+      .where((item) => item.isSold == isSold)
+      .fold<double>(0.0, (sum, item) {
+    final salePrice = (item.saleprice ?? 0);
+    return sum + (salePrice is num ? salePrice.toDouble() : 0.0);
+  });
+
+  return totalValue;
+}
+
+int? getTotalProducts(List<Allstockv2Row>? stocks) {
+  if (stocks == null) return 0;
+
+  return stocks.length;
+}
+
+double? getTotalStockValue(List<Allstockv2Row>? allStock) {
+  if (allStock == null || allStock.isEmpty) return 0.0;
+  double total = 0.0;
+  for (final stock in allStock) {
+    final price = double.tryParse(stock.costprice ?? '0') ?? 0.0;
+    total += price;
+  }
+  return total;
+}
+
+String? formatINR(double? amount) {
+  final formatCurrency = NumberFormat.currency(
+    locale: 'en_IN',
+    symbol: '₹',
+  );
+  return formatCurrency.format(amount);
+}
+
+List<ReportProductbySaleStruct>? reportListproductbySale(
+  List<AllInvoicesRow>? allinvoices,
+  DateTime? startDate,
+  DateTime? endDate,
+) {
+  if (allinvoices == null) {
+    print("Error: allinvoices list is null");
+    return [];
+  }
+
+  if (startDate == null || endDate == null) {
+    print("Error: startDate or endDate is null");
+    return [];
+  }
+
+  // Normalize start and end dates to UTC
+  final utcStart = startDate.toUtc();
+  final utcEnd = endDate.toUtc();
+
+  print("Fetched ${allinvoices.length} invoices successfully.");
+
+  final List<ReportProductbySaleStruct> reportItems = [];
+
+  for (final invoice in allinvoices) {
+    final createdDate = invoice.date;
+    if (createdDate == null) {
+      print("Warning: Invoice with null createdDate skipped");
+      continue;
+    }
+
+    // Filter invoices by date range
+    if (createdDate.isBefore(utcStart) || createdDate.isAfter(utcEnd)) continue;
+    final items = invoice.invoiceitems;
+    if (items == null || items.isEmpty) {
+      print(
+          "Warning: Invoice ${invoice.invNumber ?? ''} has empty invoiceItems");
+      continue;
+    }
+
+    // Supabase jsonb returns List<dynamic>, so no jsonDecode needed
+    if (items is List) {
+      for (final item in items) {
+        if (item is Map<String, dynamic>) {
+          final product = ReportProductbySaleStruct(
+            stockRef: item['stockRef'],
+            invoiceItem: item['invoiceItem'],
+            invoiceItemID: item['invoiceitemID'],
+            invoiceItemHSN: item['invoiceItemHSN'],
+            invoiceItemCost: item['invoiceItemCost'],
+            invoiceTaxAmount: item['invoiceTaxAmount'],
+            invoiceItemAmount: item['invoiceItemAmount'],
+            invoiceItemConfig: item['invoiceItemConfig'],
+            invoiceItemTaxRate: item['invoiceItemTaxRate'],
+            invoiceItemQuantity: item['invoiceItemQuantity'],
+            invoiceItemSerialNo: item['invoiceItemSerialNo'],
+            invoiceAmountBeforeTax: item['invoiceAmountBeforeTax'],
+            invoiceItembarCodeNumber: item['invoiceItembarCodeNumber'],
+          );
+          reportItems.add(product);
+        }
+      }
+    } else {
+      print(
+          "Warning: Invoice ${invoice.invNumber ?? ''} invoiceItems is not a List");
+    }
+  }
+
+  print("Processed ${reportItems.length} invoice items successfully.");
+  return reportItems;
+}
+
+double? reportCalculateTotalInvoice(
+  List<AllInvoicesRow> invoiceList,
+  DateTime? startDate,
+  DateTime? endDate,
+) {
+  if (invoiceList.isEmpty || startDate == null || endDate == null) {
+    print("Error: Missing invoice list or date range.");
+    return 0;
+  }
+
+  final utcStart = startDate.toUtc();
+  final utcEnd = endDate.toUtc();
+
+  print("Calculating total for invoices between $utcStart and $utcEnd...");
+
+  double total = 0;
+
+  for (final invoice in invoiceList) {
+    final createdDate = invoice.date;
+    final grandTotal = invoice.invoicesGrandTotal;
+
+    if (createdDate == null) {
+      print("Warning: Skipped invoice with null createdDate.");
+      continue;
+    }
+
+    if (createdDate.isBefore(utcStart) || createdDate.isAfter(utcEnd)) continue;
+
+    if (grandTotal != null) {
+      total += grandTotal;
+    } else {
+      print(
+          "Warning: Invoice ${invoice.invNumber ?? 'unknown'} has null grandTotal.");
+    }
+  }
+
+  print("Fetched ${invoiceList.length} invoices successfully.");
+  print("Total Invoice Grand Total: ₹${total.toStringAsFixed(2)}");
+
+  return total;
+}
+
+double? reportNetProfit(
+  List<AllInvoicesRow>? list,
+  DateTime? startDate,
+  DateTime? endDate,
+) {
+  if (list == null || startDate == null || endDate == null) {
+    print("Error: invoice list or date range is null");
+    return 0;
+  }
+
+  final utcStart = startDate.toUtc();
+  final utcEnd = endDate.toUtc();
+
+  print("Fetched ${list.length} invoices successfully.");
+  double totalProfit = 0;
+
+  for (final invoice in list) {
+    final createdDate = invoice.date;
+    if (createdDate == null) {
+      print("Warning: Skipped invoice with null createdDate");
+      continue;
+    }
+
+    if (createdDate.isBefore(utcStart) || createdDate.isAfter(utcEnd)) continue;
+
+    final items = invoice.invoiceitems;
+
+    if (items == null || items.isEmpty) {
+      print("Warning: Invoice ${invoice.invNumber ?? ''} has no items");
+      continue;
+    }
+
+    if (items is List) {
+      for (final item in items) {
+        if (item is Map<String, dynamic>) {
+          final double itemAmount = (item['invoiceItemAmount'] ?? 0).toDouble();
+          final double itemCost = (item['invoiceItemCost'] ?? 0).toDouble();
+          final double profit = itemAmount - itemCost;
+
+          totalProfit += profit;
+        }
+      }
+    } else {
+      print(
+          "Warning: Invoice ${invoice.invNumber ?? ''} has invalid items format");
+    }
+  }
+
+  print(
+      "Net Profit Calculated Successfully: ₹${totalProfit.toStringAsFixed(2)}");
+  return totalProfit;
+}
+
+double? reportPaymentReceived(
+  List<AllInvoicesRow>? invoicesList,
+  List<PaymentsRow>? paymentList,
+  DateTime? startDate,
+  DateTime? endDate,
+) {
+  if (invoicesList == null ||
+      paymentList == null ||
+      startDate == null ||
+      endDate == null) {
+    print("Error: invoices, payments, or dates are null");
+    return 0;
+  }
+
+  final utcStart = startDate.toUtc();
+  final utcEnd = endDate.toUtc();
+
+  print(
+      "Fetched ${invoicesList.length} invoices and ${paymentList.length} payments successfully.");
+
+  // Collect valid invoice references based on the invoice date range
+  final validInvoiceIds = <dynamic>{};
+  for (final invoice in invoicesList) {
+    final createdDate = invoice.date;
+    if (createdDate == null) continue;
+
+    if (!createdDate.isBefore(utcStart) && !createdDate.isAfter(utcEnd)) {
+      validInvoiceIds.add(invoice.invoiceId ?? invoice.invNumber);
+    }
+  }
+
+  double totalPayments = 0;
+  int matchedPayments = 0;
+
+  // Include ALL payments, but only match if their invoice reference belongs to the valid invoice list
+  for (final payment in paymentList) {
+    final linkedInvoiceId = payment.invoiceReference;
+    if (linkedInvoiceId != null && validInvoiceIds.contains(linkedInvoiceId)) {
+      final amount = (payment.paymentAmount ?? 0).toDouble();
+      totalPayments += amount;
+      matchedPayments++;
+    }
+  }
+
+  print("Matched $matchedPayments payments linked to invoices in range.");
+  print("Total Payment Received: ₹${totalPayments.toStringAsFixed(2)}");
+
+  return totalPayments;
+}

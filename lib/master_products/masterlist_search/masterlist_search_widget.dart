@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/master_products/update_product/update_product_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
+import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'masterlist_search_model.dart';
@@ -224,23 +225,40 @@ class _MasterlistSearchWidgetState extends State<MasterlistSearchWidget> {
                     }
                     List<Allstockv2Row> textAllstockv2RowList = snapshot.data!;
 
-                    return Text(
-                      textAllstockv2RowList.length.toString(),
-                      style: FlutterFlowTheme.of(context).titleLarge.override(
-                            font: GoogleFonts.interTight(
+                    return InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        context.pushNamed(
+                          StockDashboardWidget.routeName,
+                          queryParameters: {
+                            'searchTerm': serializeParam(
+                              widget.parameter1,
+                              ParamType.String,
+                            ),
+                          }.withoutNulls,
+                        );
+                      },
+                      child: Text(
+                        textAllstockv2RowList.length.toString(),
+                        style: FlutterFlowTheme.of(context).titleLarge.override(
+                              font: GoogleFonts.interTight(
+                                fontWeight: FontWeight.w500,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .titleLarge
+                                    .fontStyle,
+                              ),
+                              color: FlutterFlowTheme.of(context).alternate,
+                              fontSize: 14.0,
+                              letterSpacing: 0.0,
                               fontWeight: FontWeight.w500,
                               fontStyle: FlutterFlowTheme.of(context)
                                   .titleLarge
                                   .fontStyle,
                             ),
-                            color: FlutterFlowTheme.of(context).alternate,
-                            fontSize: 14.0,
-                            letterSpacing: 0.0,
-                            fontWeight: FontWeight.w500,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .titleLarge
-                                .fontStyle,
-                          ),
+                      ),
                     );
                   },
                 ),

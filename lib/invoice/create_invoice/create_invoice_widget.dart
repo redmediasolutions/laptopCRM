@@ -670,6 +670,38 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                                                           0.299,
                                                                       height:
                                                                           41.1,
+                                                                      searchHintTextStyle: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .labelMedium
+                                                                          .override(
+                                                                            font:
+                                                                                GoogleFonts.inter(
+                                                                              fontWeight: FlutterFlowTheme.of(context).labelMedium.fontWeight,
+                                                                              fontStyle: FlutterFlowTheme.of(context).labelMedium.fontStyle,
+                                                                            ),
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                            fontWeight:
+                                                                                FlutterFlowTheme.of(context).labelMedium.fontWeight,
+                                                                            fontStyle:
+                                                                                FlutterFlowTheme.of(context).labelMedium.fontStyle,
+                                                                          ),
+                                                                      searchTextStyle: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .override(
+                                                                            font:
+                                                                                GoogleFonts.inter(
+                                                                              fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                            ),
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                            fontWeight:
+                                                                                FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                                                                            fontStyle:
+                                                                                FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                          ),
                                                                       textStyle: FlutterFlowTheme.of(
                                                                               context)
                                                                           .bodyMedium
@@ -688,6 +720,8 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                                                           ),
                                                                       hintText:
                                                                           'Select...',
+                                                                      searchHintText:
+                                                                          'Search...',
                                                                       icon:
                                                                           Icon(
                                                                         Icons
@@ -719,7 +753,7 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                                                       isOverButton:
                                                                           false,
                                                                       isSearchable:
-                                                                          false,
+                                                                          true,
                                                                       isMultiSelect:
                                                                           false,
                                                                     );
@@ -1496,7 +1530,7 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                                                         flex: 1,
                                                                         child:
                                                                             Text(
-                                                                          'Cost',
+                                                                          'Price',
                                                                           style: FlutterFlowTheme.of(context)
                                                                               .bodyMedium
                                                                               .override(
@@ -1739,60 +1773,39 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                                                                             'Keydl0_${invoiceIndex.toString()}',
                                                                                           ),
                                                                                           index: invoiceIndex,
-                                                                                          defaulttext: 'Cost',
-                                                                                          data: invoiceItem.invoiceItemCost.toString(),
+                                                                                          defaulttext: 'Price',
+                                                                                          data: invoiceItem.invoiceAmountBeforeTax.toString(),
                                                                                         ),
                                                                                       ),
                                                                                     ),
                                                                                   ),
                                                                                   Expanded(
                                                                                     flex: 2,
-                                                                                    child: InkWell(
-                                                                                      splashColor: Colors.transparent,
-                                                                                      focusColor: Colors.transparent,
-                                                                                      hoverColor: Colors.transparent,
-                                                                                      highlightColor: Colors.transparent,
-                                                                                      onTap: () async {
-                                                                                        FFAppState().updateInvoiceItemsAtIndex(
-                                                                                          invoiceIndex,
-                                                                                          (e) => e
-                                                                                            ..invoiceItemAmount = valueOrDefault<double>(
-                                                                                              functions.calculateLineTotal(invoiceItem.invoiceItemQuantity, invoiceItem.invoiceItemTaxRate, invoiceItem.invoiceItemCost),
-                                                                                              0.0,
-                                                                                            ),
-                                                                                        );
-                                                                                        safeSetState(() {});
-                                                                                      },
-                                                                                      child: Container(
-                                                                                        height: 42.0,
-                                                                                        decoration: BoxDecoration(
-                                                                                          borderRadius: BorderRadius.circular(6.0),
-                                                                                          border: Border.all(
-                                                                                            color: Color(0xFFE0E0E0),
-                                                                                          ),
+                                                                                    child: Container(
+                                                                                      height: 42.0,
+                                                                                      decoration: BoxDecoration(
+                                                                                        borderRadius: BorderRadius.circular(6.0),
+                                                                                        border: Border.all(
+                                                                                          color: Color(0xFFE0E0E0),
                                                                                         ),
-                                                                                        child: Align(
-                                                                                          alignment: AlignmentDirectional(0.0, 0.0),
-                                                                                          child: Text(
-                                                                                            valueOrDefault<String>(
-                                                                                              formatNumber(
-                                                                                                functions.calculateLineTotal(invoiceItem.invoiceItemQuantity, 0.0, invoiceItem.invoiceItemCost),
-                                                                                                formatType: FormatType.decimal,
-                                                                                                decimalType: DecimalType.automatic,
-                                                                                                currency: '₹',
-                                                                                              ),
-                                                                                              'NA',
-                                                                                            ),
-                                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                  font: GoogleFonts.inter(
-                                                                                                    fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                                                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                                  ),
-                                                                                                  letterSpacing: 0.0,
+                                                                                      ),
+                                                                                      child: Align(
+                                                                                        alignment: AlignmentDirectional(0.0, 0.0),
+                                                                                        child: Text(
+                                                                                          formatNumber(
+                                                                                            invoiceItem.invoiceItemAmount,
+                                                                                            formatType: FormatType.decimal,
+                                                                                            decimalType: DecimalType.periodDecimal,
+                                                                                          ),
+                                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                font: GoogleFonts.inter(
                                                                                                   fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
                                                                                                   fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                                                                                                 ),
-                                                                                          ),
+                                                                                                letterSpacing: 0.0,
+                                                                                                fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                                                                                                fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                              ),
                                                                                         ),
                                                                                       ),
                                                                                     ),
@@ -2417,9 +2430,9 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                                                   child:
                                                                       FFButtonWidget(
                                                                     onPressed:
-                                                                        () {
-                                                                      print(
-                                                                          'cancel pressed ...');
+                                                                        () async {
+                                                                      context
+                                                                          .safePop();
                                                                     },
                                                                     text:
                                                                         'Cancel',
@@ -2506,7 +2519,7 @@ class _CreateInvoiceWidgetState extends State<CreateInvoiceWidget> {
                                                                             .selectedCustomerforEstimate
                                                                             ?.id,
                                                                         'invoices_date':
-                                                                            supaSerialize<DateTime>(_model.datePicked),
+                                                                            supaSerialize<DateTime>(_model.invoiceDate),
                                                                         'invoices_discount': double.tryParse(_model
                                                                             .discountTextController
                                                                             .text),

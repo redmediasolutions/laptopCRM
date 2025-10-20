@@ -28,3 +28,9 @@ export '/dashboards/vendor_dashboard/vendor_dashboard_widget.dart'
     show VendorDashboardWidget;
 export '/brands/brandsdashboard/brandsdashboard_widget.dart'
     show BrandsdashboardWidget;
+export '/warranty_management/warranty_management/warranty_management_widget.dart'
+    show WarrantyManagementWidget;
+export '/warranty_management/create_warranty/create_warranty_widget.dart'
+    show CreateWarrantyWidget;
+export '/reports/product_report/product_report_widget.dart'
+    show ProductReportWidget;

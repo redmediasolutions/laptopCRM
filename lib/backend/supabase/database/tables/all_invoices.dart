@@ -86,4 +86,7 @@ class AllInvoicesRow extends SupabaseDataRow {
 
   bool? get isarchive => getField<bool>('isarchive');
   set isarchive(bool? value) => setField<bool>('isarchive', value);
+
+  DateTime? get createdtime => getField<DateTime>('createdtime');
+  set createdtime(DateTime? value) => setField<DateTime>('createdtime', value);
 }

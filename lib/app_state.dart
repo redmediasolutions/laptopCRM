@@ -274,6 +274,37 @@ class FFAppState extends ChangeNotifier {
     _apikey = value;
     prefs.setString('ff_apikey', value);
   }
+
+  List<ReportProductbySaleStruct> _reportbyProductSale = [];
+  List<ReportProductbySaleStruct> get reportbyProductSale =>
+      _reportbyProductSale;
+  set reportbyProductSale(List<ReportProductbySaleStruct> value) {
+    _reportbyProductSale = value;
+  }
+
+  void addToReportbyProductSale(ReportProductbySaleStruct value) {
+    reportbyProductSale.add(value);
+  }
+
+  void removeFromReportbyProductSale(ReportProductbySaleStruct value) {
+    reportbyProductSale.remove(value);
+  }
+
+  void removeAtIndexFromReportbyProductSale(int index) {
+    reportbyProductSale.removeAt(index);
+  }
+
+  void updateReportbyProductSaleAtIndex(
+    int index,
+    ReportProductbySaleStruct Function(ReportProductbySaleStruct) updateFn,
+  ) {
+    reportbyProductSale[index] = updateFn(_reportbyProductSale[index]);
+  }
+
+  void insertAtIndexInReportbyProductSale(
+      int index, ReportProductbySaleStruct value) {
+    reportbyProductSale.insert(index, value);
+  }
 }
 
 void _safeInit(Function() initializeField) {

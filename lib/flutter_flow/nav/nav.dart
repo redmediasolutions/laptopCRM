@@ -203,6 +203,36 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: BrandsdashboardWidget.routeName,
           path: BrandsdashboardWidget.routePath,
           builder: (context, params) => BrandsdashboardWidget(),
+        ),
+        FFRoute(
+          name: WarrantyManagementWidget.routeName,
+          path: WarrantyManagementWidget.routePath,
+          builder: (context, params) => WarrantyManagementWidget(
+            searchTerm: params.getParam(
+              'searchTerm',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: CreateWarrantyWidget.routeName,
+          path: CreateWarrantyWidget.routePath,
+          builder: (context, params) => CreateWarrantyWidget(
+            searchTerm: params.getParam(
+              'searchTerm',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: ProductReportWidget.routeName,
+          path: ProductReportWidget.routePath,
+          builder: (context, params) => ProductReportWidget(
+            searchTerm: params.getParam(
+              'searchTerm',
+              ParamType.String,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -440,7 +470,11 @@ class TransitionInfo {
   final Duration duration;
   final Alignment? alignment;
 
-  static TransitionInfo appDefault() => TransitionInfo(hasTransition: false);
+  static TransitionInfo appDefault() => TransitionInfo(
+        hasTransition: true,
+        transitionType: PageTransitionType.fade,
+        duration: Duration(milliseconds: 0),
+      );
 }
 
 class RootPageContext {

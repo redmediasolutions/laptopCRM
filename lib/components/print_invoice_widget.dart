@@ -1394,6 +1394,30 @@ class _PrintInvoiceWidgetState extends State<PrintInvoiceWidget> {
                                     Expanded(
                                       flex: 2,
                                       child: Text(
+                                        'SERIAL ',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              font: GoogleFonts.inter(
+                                                fontWeight: FontWeight.bold,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontStyle,
+                                              ),
+                                              fontSize: 11.0,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.bold,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: Text(
                                         'QUANTITY',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
@@ -1418,7 +1442,7 @@ class _PrintInvoiceWidgetState extends State<PrintInvoiceWidget> {
                                     Expanded(
                                       flex: 2,
                                       child: Text(
-                                        'COST',
+                                        'PRICE',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -1639,6 +1663,48 @@ class _PrintInvoiceWidgetState extends State<PrintInvoiceWidget> {
                                                     valueOrDefault<String>(
                                                       getJsonField(
                                                         invoicesItem,
+                                                        r'''$.invoiceItemSerialNo''',
+                                                      )?.toString(),
+                                                      'NA',
+                                                    ),
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          font:
+                                                              GoogleFonts.inter(
+                                                            fontWeight:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontWeight,
+                                                            fontStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontStyle,
+                                                          ),
+                                                          fontSize: 13.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .fontStyle,
+                                                        ),
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  flex: 2,
+                                                  child: Text(
+                                                    valueOrDefault<String>(
+                                                      getJsonField(
+                                                        invoicesItem,
                                                         r'''$.invoiceItemQuantity''',
                                                       )?.toString(),
                                                       'NA',
@@ -1681,7 +1747,7 @@ class _PrintInvoiceWidgetState extends State<PrintInvoiceWidget> {
                                                     valueOrDefault<String>(
                                                       getJsonField(
                                                         invoicesItem,
-                                                        r'''$.invoiceItemCost''',
+                                                        r'''$.invoiceAmountBeforeTax''',
                                                       )?.toString(),
                                                       'NA',
                                                     ),

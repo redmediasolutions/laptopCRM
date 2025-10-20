@@ -1,7 +1,9 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'invoice_quantity_model.dart';
 export 'invoice_quantity_model.dart';
 
@@ -43,7 +45,20 @@ class _InvoiceQuantityWidgetState extends State<InvoiceQuantityWidget> {
           widget.index!,
           (e) => e
             ..invoiceItemQuantity =
-                int.tryParse(_model.quantityTextController.text),
+                int.tryParse(_model.quantityTextController.text)
+            ..invoiceItemAmount = valueOrDefault<double>(
+              functions.calculateLineTotal(
+                  int.tryParse(_model.quantityTextController.text),
+                  FFAppState()
+                      .invoiceItems
+                      .elementAtOrNull(widget.index!)!
+                      .invoiceItemTaxRate,
+                  FFAppState()
+                      .invoiceItems
+                      .elementAtOrNull(widget.index!)
+                      ?.invoiceAmountBeforeTax),
+              0.0,
+            ),
         );
         safeSetState(() {});
       },
@@ -60,6 +75,8 @@ class _InvoiceQuantityWidgetState extends State<InvoiceQuantityWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 20.0, 0.0),
       child: Container(

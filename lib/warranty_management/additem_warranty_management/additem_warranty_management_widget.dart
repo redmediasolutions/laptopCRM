@@ -1,4 +1,3 @@
-import '/backend/schema/structs/index.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -7,18 +6,25 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'additemto_invoice_model.dart';
-export 'additemto_invoice_model.dart';
+import 'additem_warranty_management_model.dart';
+export 'additem_warranty_management_model.dart';
 
-class AdditemtoInvoiceWidget extends StatefulWidget {
-  const AdditemtoInvoiceWidget({super.key});
+class AdditemWarrantyManagementWidget extends StatefulWidget {
+  const AdditemWarrantyManagementWidget({
+    super.key,
+    required this.stockIdcallback,
+  });
+
+  final Future Function(int? stockId)? stockIdcallback;
 
   @override
-  State<AdditemtoInvoiceWidget> createState() => _AdditemtoInvoiceWidgetState();
+  State<AdditemWarrantyManagementWidget> createState() =>
+      _AdditemWarrantyManagementWidgetState();
 }
 
-class _AdditemtoInvoiceWidgetState extends State<AdditemtoInvoiceWidget> {
-  late AdditemtoInvoiceModel _model;
+class _AdditemWarrantyManagementWidgetState
+    extends State<AdditemWarrantyManagementWidget> {
+  late AdditemWarrantyManagementModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -29,7 +35,7 @@ class _AdditemtoInvoiceWidgetState extends State<AdditemtoInvoiceWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => AdditemtoInvoiceModel());
+    _model = createModel(context, () => AdditemWarrantyManagementModel());
 
     _model.searchItemTextController ??= TextEditingController();
     _model.searchItemFocusNode ??= FocusNode();
@@ -241,7 +247,7 @@ class _AdditemtoInvoiceWidgetState extends State<AdditemtoInvoiceWidget> {
                                     )
                                     .eqOrNull(
                                       'isSold',
-                                      false,
+                                      true,
                                     ),
                               ),
                               builder: (context, snapshot) {
@@ -534,53 +540,11 @@ class _AdditemtoInvoiceWidgetState extends State<AdditemtoInvoiceWidget> {
                                                     ),
                                                     showLoadingIndicator: true,
                                                     onPressed: () async {
-                                                      FFAppState()
-                                                          .addToInvoiceItems(
-                                                              InvoiceStruct(
-                                                        invoiceitemID:
-                                                            searchListItem
-                                                                .stockid
-                                                                .toString(),
-                                                        invoiceItem:
-                                                            searchListItem
-                                                                .model,
-                                                        invoiceItemConfig:
-                                                            searchListItem
-                                                                .productconfig,
-                                                        invoiceItemCost: functions
-                                                            .stringtoDouble(
-                                                                searchListItem
-                                                                    .costPrice),
-                                                        invoiceItemQuantity: 1,
-                                                        invoiceAmountBeforeTax:
-                                                            functions.stringtoDouble(
-                                                                searchListItem
-                                                                    .salePrice),
-                                                        invoiceItemHSN: '0',
-                                                        invoiceItemTaxRate: 0.0,
-                                                        invoiceTaxAmount: 0.0,
-                                                        invoiceItemAmount: functions
-                                                            .calculateLineTotal(
-                                                                1,
-                                                                0.0,
-                                                                functions.stringtoDouble(
-                                                                    searchListItem
-                                                                        .salePrice)),
-                                                        invoiceItemSerialNo:
-                                                            searchListItem
-                                                                .serialNo,
-                                                        invoiceItembarCodeNumber:
-                                                            '0',
-                                                        stockRef: searchListItem
-                                                            .stockid,
-                                                      ));
-                                                      safeSetState(() {});
-                                                      await Future.delayed(
-                                                        Duration(
-                                                          milliseconds: 400,
-                                                        ),
+                                                      await widget
+                                                          .stockIdcallback
+                                                          ?.call(
+                                                        searchListItem.stockid,
                                                       );
-                                                      Navigator.pop(context);
                                                     },
                                                   ),
                                                 ],

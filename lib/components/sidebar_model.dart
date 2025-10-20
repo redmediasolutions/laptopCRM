@@ -37,6 +37,14 @@ class SidebarModel extends FlutterFlowModel<SidebarWidget> {
   bool mouseRegionHovered15 = false;
   // State field(s) for MouseRegion widget.
   bool mouseRegionHovered16 = false;
+  // State field(s) for MouseRegion widget.
+  bool mouseRegionHovered17 = false;
+  // State field(s) for MouseRegion widget.
+  bool mouseRegionHovered18 = false;
+  // State field(s) for MouseRegion widget.
+  bool mouseRegionHovered19 = false;
+  // State field(s) for MouseRegion widget.
+  bool mouseRegionHovered20 = false;
 
   @override
   void initState(BuildContext context) {}

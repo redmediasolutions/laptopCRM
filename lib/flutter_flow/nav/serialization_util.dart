@@ -218,6 +218,8 @@ dynamic deserializeParam<T>(
         switch (T) {
           case PaymentsRow:
             return PaymentsRow(data);
+          case WarrantyRow:
+            return WarrantyRow(data);
           case BrandRow:
             return BrandRow(data);
           case VendorsRow:
@@ -252,6 +254,8 @@ dynamic deserializeParam<T>(
             return AllInvoicesRow(data);
           case VendorPaymentsRow:
             return VendorPaymentsRow(data);
+          case WarrantyCheckRow:
+            return WarrantyCheckRow(data);
           default:
             return null;
         }

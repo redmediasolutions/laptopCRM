@@ -6,6 +6,7 @@ export 'row.dart';
 export 'table.dart';
 
 export 'tables/payments.dart';
+export 'tables/warranty.dart';
 export 'tables/brand.dart';
 export 'tables/vendors.dart';
 export 'tables/allstockv2.dart';
@@ -23,3 +24,4 @@ export 'tables/business.dart';
 export 'tables/users.dart';
 export 'tables/all_invoices.dart';
 export 'tables/vendor_payments.dart';
+export 'tables/warranty_check.dart';
