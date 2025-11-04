@@ -900,3 +900,11 @@ double? reportPaymentReceived(
 
   return totalPayments;
 }
+
+DateTime? jsonToDateTime(dynamic json) {
+  // parse json to datetime
+  if (json is String) {
+    return DateTime.tryParse(json);
+  }
+  return null;
+}

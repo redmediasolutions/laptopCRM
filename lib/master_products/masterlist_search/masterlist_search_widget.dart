@@ -12,32 +12,32 @@ export 'masterlist_search_model.dart';
 class MasterlistSearchWidget extends StatefulWidget {
   const MasterlistSearchWidget({
     super.key,
-    this.parameter1,
-    this.parameter2,
-    this.parameter3,
-    this.parameter4,
-    this.parameter5,
-    this.parameter6,
-    this.parameter7,
-    this.parameter8,
-    this.parameter9,
-    this.parameter10,
-    this.parameter11,
-    this.parameter12,
+    this.name,
+    this.brand,
+    this.configuration,
+    this.type,
+    this.productid,
+    this.tyoeRef,
+    this.brandRef,
+    this.namee,
+    this.configurationn,
+    this.productDescription,
+    this.productCode,
+    this.index,
   });
 
-  final String? parameter1;
-  final String? parameter2;
-  final String? parameter3;
-  final String? parameter4;
-  final int? parameter5;
-  final String? parameter6;
-  final String? parameter7;
-  final String? parameter8;
-  final String? parameter9;
-  final String? parameter10;
-  final String? parameter11;
-  final int? parameter12;
+  final String? name;
+  final String? brand;
+  final String? configuration;
+  final String? type;
+  final int? productid;
+  final String? tyoeRef;
+  final String? brandRef;
+  final String? namee;
+  final String? configurationn;
+  final String? productDescription;
+  final String? productCode;
+  final int? index;
 
   @override
   State<MasterlistSearchWidget> createState() => _MasterlistSearchWidgetState();
@@ -78,7 +78,7 @@ class _MasterlistSearchWidgetState extends State<MasterlistSearchWidget> {
           minHeight: 54.0,
         ),
         decoration: BoxDecoration(
-          color: functions.isEven(widget.parameter12!.toString())
+          color: functions.isEven(widget.index!.toString())
               ? Color(0xFF272727)
               : Color(0x00000000),
           borderRadius: BorderRadius.only(
@@ -105,7 +105,7 @@ class _MasterlistSearchWidgetState extends State<MasterlistSearchWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.parameter1!,
+                      widget.name!,
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             font: GoogleFonts.inter(
                               fontWeight: FontWeight.w500,
@@ -128,7 +128,7 @@ class _MasterlistSearchWidgetState extends State<MasterlistSearchWidget> {
               Expanded(
                 flex: 2,
                 child: Text(
-                  widget.parameter2!,
+                  widget.brand!,
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         font: GoogleFonts.inter(
                           fontWeight: FontWeight.w500,
@@ -149,7 +149,7 @@ class _MasterlistSearchWidgetState extends State<MasterlistSearchWidget> {
                 child: Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 20.0, 0.0),
                   child: Text(
-                    widget.parameter3!,
+                    widget.configuration!,
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           font: GoogleFonts.inter(
                             fontWeight: FlutterFlowTheme.of(context)
@@ -177,7 +177,7 @@ class _MasterlistSearchWidgetState extends State<MasterlistSearchWidget> {
                 Expanded(
                   flex: 2,
                   child: Text(
-                    widget.parameter4!,
+                    widget.type!,
                     style: FlutterFlowTheme.of(context).titleLarge.override(
                           font: GoogleFonts.interTight(
                             fontWeight: FontWeight.w500,
@@ -201,7 +201,7 @@ class _MasterlistSearchWidgetState extends State<MasterlistSearchWidget> {
                     queryFn: (q) => q
                         .eqOrNull(
                           'productid',
-                          widget.parameter5,
+                          widget.productid,
                         )
                         .eqOrNull(
                           'isSold',
@@ -235,7 +235,7 @@ class _MasterlistSearchWidgetState extends State<MasterlistSearchWidget> {
                           StockDashboardWidget.routeName,
                           queryParameters: {
                             'searchTerm': serializeParam(
-                              widget.parameter1,
+                              widget.name,
                               ParamType.String,
                             ),
                           }.withoutNulls,
@@ -284,13 +284,13 @@ class _MasterlistSearchWidgetState extends State<MasterlistSearchWidget> {
                             return Padding(
                               padding: MediaQuery.viewInsetsOf(context),
                               child: UpdateProductWidget(
-                                typeref: widget.parameter6!,
-                                brandRef: widget.parameter7!,
-                                productid: widget.parameter5,
-                                nameofProduct: widget.parameter8,
-                                config: widget.parameter9,
-                                description: widget.parameter10,
-                                productCode: widget.parameter11,
+                                typeref: widget.tyoeRef!,
+                                brandRef: widget.brandRef!,
+                                productid: widget.productid,
+                                nameofProduct: widget.namee,
+                                config: widget.configurationn,
+                                description: widget.productDescription,
+                                productCode: widget.productCode,
                               ),
                             );
                           },
@@ -335,7 +335,7 @@ class _MasterlistSearchWidgetState extends State<MasterlistSearchWidget> {
                           await ProductsTable().delete(
                             matchingRows: (rows) => rows.eqOrNull(
                               'id',
-                              widget.parameter5,
+                              widget.productid,
                             ),
                           );
                           ScaffoldMessenger.of(context).showSnackBar(

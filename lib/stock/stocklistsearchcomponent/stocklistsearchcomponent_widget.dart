@@ -12,42 +12,42 @@ export 'stocklistsearchcomponent_model.dart';
 class StocklistsearchcomponentWidget extends StatefulWidget {
   const StocklistsearchcomponentWidget({
     super.key,
-    this.parameter1,
-    this.parameter2,
-    this.parameter3,
-    this.parameter4,
-    this.parameter5,
-    this.parameter6,
-    this.parameter7,
-    this.parameter8,
-    required this.parameter9,
-    this.parameter10,
-    this.parameter11,
-    this.parameter12,
-    this.parameter13,
-    this.parameter14,
-    this.parameter15,
-    this.parameter16,
-    this.parameter17,
+    this.productName,
+    this.configuration,
+    this.serialNo,
+    this.serialNoo,
+    this.vendor,
+    this.costPrice,
+    this.salePrice,
+    this.condition,
+    required this.purchaseDate,
+    this.isSold,
+    this.vendorvv,
+    this.phone,
+    this.purchaseId,
+    this.stockid,
+    this.purchaseDateee,
+    this.productReference,
+    this.indexinList,
   });
 
-  final String? parameter1;
-  final String? parameter2;
-  final String? parameter3;
-  final String? parameter4;
-  final String? parameter5;
-  final String? parameter6;
-  final String? parameter7;
-  final String? parameter8;
-  final String? parameter9;
-  final bool? parameter10;
-  final String? parameter11;
-  final String? parameter12;
-  final int? parameter13;
-  final int? parameter14;
-  final DateTime? parameter15;
-  final String? parameter16;
-  final int? parameter17;
+  final String? productName;
+  final String? configuration;
+  final String? serialNo;
+  final String? serialNoo;
+  final String? vendor;
+  final String? costPrice;
+  final String? salePrice;
+  final String? condition;
+  final String? purchaseDate;
+  final bool? isSold;
+  final String? vendorvv;
+  final String? phone;
+  final int? purchaseId;
+  final int? stockid;
+  final DateTime? purchaseDateee;
+  final String? productReference;
+  final int? indexinList;
 
   @override
   State<StocklistsearchcomponentWidget> createState() =>
@@ -85,7 +85,7 @@ class _StocklistsearchcomponentWidgetState
       padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 1.0),
       child: Container(
         decoration: BoxDecoration(
-          color: functions.isEven(widget.parameter17!.toString())
+          color: functions.isEven(widget.indexinList!.toString())
               ? Color(0xFF272727)
               : Color(0x00000000),
           border: Border.all(
@@ -111,7 +111,7 @@ class _StocklistsearchcomponentWidgetState
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.parameter1!,
+                          widget.productName!,
                           style: FlutterFlowTheme.of(context)
                               .bodyMedium
                               .override(
@@ -131,7 +131,7 @@ class _StocklistsearchcomponentWidgetState
                               ),
                         ),
                         Text(
-                          widget.parameter2!,
+                          widget.configuration!,
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
                                     font: GoogleFonts.inter(
@@ -175,14 +175,14 @@ class _StocklistsearchcomponentWidgetState
                         return Padding(
                           padding: MediaQuery.viewInsetsOf(context),
                           child: BarcodeWidget(
-                            barcode: widget.parameter4,
+                            barcode: widget.serialNoo,
                           ),
                         );
                       },
                     ).then((value) => safeSetState(() {}));
                   },
                   child: Text(
-                    widget.parameter3!,
+                    widget.serialNo!,
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           font: GoogleFonts.inter(
                             fontWeight: FlutterFlowTheme.of(context)
@@ -206,7 +206,7 @@ class _StocklistsearchcomponentWidgetState
               Expanded(
                 flex: 2,
                 child: Text(
-                  widget.parameter5!,
+                  widget.vendor!,
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         font: GoogleFonts.inter(
                           fontWeight: FlutterFlowTheme.of(context)
@@ -229,7 +229,7 @@ class _StocklistsearchcomponentWidgetState
                 child: Text(
                   valueOrDefault<String>(
                     formatNumber(
-                      functions.stringtoDouble(widget.parameter6!),
+                      functions.stringtoDouble(widget.costPrice!),
                       formatType: FormatType.decimal,
                       decimalType: DecimalType.automatic,
                       currency: '₹',
@@ -258,7 +258,7 @@ class _StocklistsearchcomponentWidgetState
                 child: Text(
                   valueOrDefault<String>(
                     formatNumber(
-                      functions.stringtoDouble(widget.parameter7!),
+                      functions.stringtoDouble(widget.salePrice!),
                       formatType: FormatType.decimal,
                       decimalType: DecimalType.automatic,
                       currency: '₹',
@@ -285,7 +285,7 @@ class _StocklistsearchcomponentWidgetState
               Expanded(
                 flex: 2,
                 child: Text(
-                  widget.parameter8!,
+                  widget.condition!,
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         font: GoogleFonts.inter(
                           fontWeight: FlutterFlowTheme.of(context)
@@ -306,7 +306,7 @@ class _StocklistsearchcomponentWidgetState
               Expanded(
                 flex: 2,
                 child: Text(
-                  widget.parameter9!,
+                  widget.purchaseDate!,
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         font: GoogleFonts.inter(
                           fontWeight: FlutterFlowTheme.of(context)
@@ -328,7 +328,7 @@ class _StocklistsearchcomponentWidgetState
                 flex: 2,
                 child: Builder(
                   builder: (context) {
-                    if (widget.parameter10 == true) {
+                    if (widget.isSold == true) {
                       return Align(
                         alignment: AlignmentDirectional(-1.0, 0.0),
                         child: Container(
@@ -427,16 +427,16 @@ class _StocklistsearchcomponentWidgetState
                             return Padding(
                               padding: MediaQuery.viewInsetsOf(context),
                               child: UpdateItemListWidget(
-                                vendorName: widget.parameter11!,
-                                vendorPhone: widget.parameter12!,
-                                purchaseId: widget.parameter13,
-                                stockId: widget.parameter14,
-                                serialNo: widget.parameter4,
-                                dateOfPurchse: widget.parameter15,
-                                isSold: widget.parameter10,
-                                productReference: widget.parameter16,
-                                salePrice: widget.parameter7,
-                                costPrice: widget.parameter6,
+                                vendorName: widget.vendorvv!,
+                                vendorPhone: widget.phone!,
+                                purchaseId: widget.purchaseId,
+                                stockId: widget.stockid,
+                                serialNo: widget.serialNoo,
+                                dateOfPurchse: widget.purchaseDateee,
+                                isSold: widget.isSold,
+                                productReference: widget.productReference,
+                                salePrice: widget.salePrice,
+                                costPrice: widget.costPrice,
                               ),
                             );
                           },
@@ -481,7 +481,7 @@ class _StocklistsearchcomponentWidgetState
                           await StockTable().delete(
                             matchingRows: (rows) => rows.eqOrNull(
                               'id',
-                              widget.parameter14,
+                              widget.stockid,
                             ),
                           );
                           await showDialog(

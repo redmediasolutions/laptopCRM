@@ -9,15 +9,17 @@ export 'api_manager.dart' show ApiCallResponse;
 
 const _kPrivateApiFunctionName = 'ffPrivateApiCall';
 
-class StockListCall {
+class MasterlistproductsCall {
   static Future<ApiCallResponse> call({
     int? offset,
     int? limit,
     String? apikey = '',
+    String? businessid = '',
   }) async {
     return ApiManager.instance.makeApiCall(
-      callName: 'Stock list',
-      apiUrl: 'https://gdxepzlxzlzjrkxqpqwo.supabase.co/rest/v1/allstockv2',
+      callName: 'masterlistproducts',
+      apiUrl:
+          'https://gdxepzlxzlzjrkxqpqwo.supabase.co/rest/v1/masterlistproducts?businessid=eq.${businessid}',
       callType: ApiCallType.GET,
       headers: {
         'apikey': '${apikey}',
@@ -30,6 +32,476 @@ class StockListCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static List<int>? productid(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].productid''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<int>(x))
+          .withoutNulls
+          .toList();
+  static List<int>? typeid(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].typeid''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<int>(x))
+          .withoutNulls
+          .toList();
+  static List<int>? businessid(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].businessid''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<int>(x))
+          .withoutNulls
+          .toList();
+  static List<int>? brandid(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].brandid''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<int>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? productname(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].product_name''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? productdescription(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].product_description''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? productconfig(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].product_config''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? productreference(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].productreference''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? typename(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].type_name''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List? stockref(dynamic response) => getJsonField(
+        response,
+        r'''$[:].stock_ref''',
+        true,
+      ) as List?;
+  static List<String>? name(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].name''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? typereference(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].typereference''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? productcode(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].productcode''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? brandreference(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].brandreference''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+}
+
+class MasterlistproductsSearchCall {
+  static Future<ApiCallResponse> call({
+    int? offset,
+    int? limit,
+    String? apikey = '',
+    String? businessid = '',
+    String? term = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'masterlistproducts Search',
+      apiUrl:
+          'https://gdxepzlxzlzjrkxqpqwo.supabase.co/rest/v1/masterlistproducts?businessid=eq.${businessid}&or=(product_name.ilike.*${term}*,product_config.ilike.*${term}*)',
+      callType: ApiCallType.GET,
+      headers: {
+        'apikey': '${apikey}',
+      },
+      params: {
+        'offset': offset,
+        'limit': limit,
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static List<int>? productid(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].productid''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<int>(x))
+          .withoutNulls
+          .toList();
+  static List<int>? typeid(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].typeid''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<int>(x))
+          .withoutNulls
+          .toList();
+  static List<int>? businessid(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].businessid''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<int>(x))
+          .withoutNulls
+          .toList();
+  static List<int>? brandid(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].brandid''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<int>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? productname(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].product_name''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? productdescription(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].product_description''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? productconfig(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].product_config''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? productreference(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].productreference''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? typename(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].type_name''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List? stockref(dynamic response) => getJsonField(
+        response,
+        r'''$[:].stock_ref''',
+        true,
+      ) as List?;
+  static List<String>? name(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].name''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? typereference(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].typereference''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? productcode(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].productcode''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? brandreference(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].brandreference''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+}
+
+class StockListCall {
+  static Future<ApiCallResponse> call({
+    int? offset,
+    int? limit,
+    String? apikey = '',
+    String? businessid = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'Stock list',
+      apiUrl:
+          'https://gdxepzlxzlzjrkxqpqwo.supabase.co/rest/v1/allstockv2?business_id=eq.${businessid}',
+      callType: ApiCallType.GET,
+      headers: {
+        'apikey': '${apikey}',
+      },
+      params: {
+        'offset': offset,
+        'limit': limit,
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static List<int>? productid(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].productid''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<int>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? name(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].product_name''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? config(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].product_config''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? desc(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].product_description''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? serial(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].product_serial''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? sale(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].saleprice''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<bool>? isSold(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].isSold''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<bool>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? condition(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].condition''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? purchaseDate(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].purchase_date''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? vendor(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].vendor_name''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? cost(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].costprice''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<int>? purchaseId(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].purchasesid''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<int>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? vendorphone(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].vendor_phone''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<int>? stockid(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].stock_id''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<int>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? productReference(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].product_reference''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+}
+
+class StockListSearchCall {
+  static Future<ApiCallResponse> call({
+    int? offset,
+    int? limit = 15,
+    String? apikey = '',
+    String? term = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'Stock list Search',
+      apiUrl:
+          'https://gdxepzlxzlzjrkxqpqwo.supabase.co/rest/v1/allstockv2?or=(product_name.ilike.*${term}*,product_serial.ilike.*${term}*)',
+      callType: ApiCallType.GET,
+      headers: {
+        'apikey': '${apikey}',
+      },
+      params: {
+        'offset': offset,
+        'limit': limit,
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: true,
       isStreamingApi: false,
       alwaysAllowBody: false,
     );

@@ -1,5 +1,4 @@
 import '/backend/api_requests/api_calls.dart';
-import '/backend/supabase/supabase.dart';
 import '/components/sidebar_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -287,15 +286,6 @@ class _StockDashboardWidgetState extends State<StockDashboardWidget> {
                                   ),
                                 ].divide(SizedBox(width: 30.0)),
                               ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 16.0, 16.0, 0.0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [],
                             ),
                           ),
                           Padding(
@@ -1061,11 +1051,14 @@ class _StockDashboardWidgetState extends State<StockDashboardWidget> {
                                                 _model.setListViewController1(
                                               (nextPageMarker) =>
                                                   StockListCall.call(
-                                                apikey: FFAppState().apikey,
-                                                limit: _model.limit,
                                                 offset: nextPageMarker
                                                         .nextPageNumber *
-                                                    _model.limit,
+                                                    10,
+                                                limit: 10,
+                                                apikey: FFAppState().apikey,
+                                                businessid: FFAppState()
+                                                    .businessRefID
+                                                    .toString(),
                                               ),
                                             ),
                                             padding: EdgeInsets.zero,
@@ -1203,51 +1196,46 @@ class _StockDashboardWidgetState extends State<StockDashboardWidget> {
                                             ),
                                           ),
                                         if (_model.search)
-                                          FutureBuilder<List<Allstockv2Row>>(
-                                            future: Allstockv2Table().queryRows(
-                                              queryFn: (q) => q
-                                                  .eqOrNull(
-                                                    'business_id',
-                                                    FFAppState().businessRefID,
-                                                  )
-                                                  .order('stock_id'),
-                                            ),
-                                            builder: (context, snapshot) {
-                                              // Customize what your widget looks like when it's loading.
-                                              if (!snapshot.hasData) {
-                                                return Center(
-                                                  child: SizedBox(
-                                                    width: 50.0,
-                                                    height: 50.0,
-                                                    child:
-                                                        CircularProgressIndicator(
-                                                      valueColor:
-                                                          AlwaysStoppedAnimation<
-                                                              Color>(
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .primary,
+                                          Container(
+                                            decoration: BoxDecoration(),
+                                            child:
+                                                FutureBuilder<ApiCallResponse>(
+                                              future: StockListSearchCall.call(
+                                                apikey: FFAppState().apikey,
+                                                term: _model.searchInput,
+                                                limit: 15,
+                                              ),
+                                              builder: (context, snapshot) {
+                                                // Customize what your widget looks like when it's loading.
+                                                if (!snapshot.hasData) {
+                                                  return Center(
+                                                    child: SizedBox(
+                                                      width: 50.0,
+                                                      height: 50.0,
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                        valueColor:
+                                                            AlwaysStoppedAnimation<
+                                                                Color>(
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary,
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                                );
-                                              }
-                                              List<Allstockv2Row>
-                                                  containerAllstockv2RowList =
-                                                  snapshot.data!;
+                                                  );
+                                                }
+                                                final searchStocksStockListSearchResponse =
+                                                    snapshot.data!;
 
-                                              return Container(
-                                                decoration: BoxDecoration(),
-                                                child: Builder(
+                                                return Builder(
                                                   builder: (context) {
-                                                    final searchStock = functions
-                                                            .stockSearch(
-                                                                _model
-                                                                    .searchInput,
-                                                                containerAllstockv2RowList
-                                                                    .toList())
-                                                            ?.toList() ??
-                                                        [];
+                                                    final searchStock =
+                                                        getJsonField(
+                                                      searchStocksStockListSearchResponse
+                                                          .jsonBody,
+                                                      r'''$''',
+                                                    ).toList();
 
                                                     return ListView.builder(
                                                       padding: EdgeInsets.zero,
@@ -1262,83 +1250,132 @@ class _StockDashboardWidgetState extends State<StockDashboardWidget> {
                                                         final searchStockItem =
                                                             searchStock[
                                                                 searchStockIndex];
-                                                        return StocklistsearchcomponentWidget(
-                                                          key: Key(
-                                                              'Keyftv_${searchStockIndex}_of_${searchStock.length}'),
-                                                          parameter1:
-                                                              valueOrDefault<
-                                                                  String>(
-                                                            searchStockItem
-                                                                .model,
-                                                            'NA',
+                                                        return wrapWithModel(
+                                                          model: _model
+                                                              .stocklistsearchcomponentModels
+                                                              .getModel(
+                                                            searchStockIndex
+                                                                .toString(),
+                                                            searchStockIndex,
                                                           ),
-                                                          parameter2:
-                                                              searchStockItem
-                                                                  .productconfig,
-                                                          parameter3:
-                                                              valueOrDefault<
-                                                                  String>(
-                                                            searchStockItem
-                                                                .serialNo,
-                                                            'NA',
+                                                          updateCallback: () =>
+                                                              safeSetState(
+                                                                  () {}),
+                                                          child:
+                                                              StocklistsearchcomponentWidget(
+                                                            key: Key(
+                                                              'Keyftv_${searchStockIndex.toString()}',
+                                                            ),
+                                                            productName:
+                                                                valueOrDefault<
+                                                                    String>(
+                                                              getJsonField(
+                                                                searchStockItem,
+                                                                r'''$.product_name''',
+                                                              )?.toString(),
+                                                              'NA',
+                                                            ),
+                                                            configuration:
+                                                                getJsonField(
+                                                              searchStockItem,
+                                                              r'''$.product_config''',
+                                                            ).toString(),
+                                                            serialNo:
+                                                                valueOrDefault<
+                                                                    String>(
+                                                              getJsonField(
+                                                                searchStockItem,
+                                                                r'''$.product_serial''',
+                                                              )?.toString(),
+                                                              'NA',
+                                                            ),
+                                                            serialNoo:
+                                                                valueOrDefault<
+                                                                    String>(
+                                                              getJsonField(
+                                                                searchStockItem,
+                                                                r'''$.product_serial''',
+                                                              )?.toString(),
+                                                              'NA',
+                                                            ),
+                                                            vendor:
+                                                                valueOrDefault<
+                                                                    String>(
+                                                              getJsonField(
+                                                                searchStockItem,
+                                                                r'''$.vendor_name''',
+                                                              )?.toString(),
+                                                              'NA',
+                                                            ),
+                                                            costPrice:
+                                                                getJsonField(
+                                                              searchStockItem,
+                                                              r'''$.costprice''',
+                                                            ).toString(),
+                                                            salePrice:
+                                                                getJsonField(
+                                                              searchStockItem,
+                                                              r'''$.saleprice''',
+                                                            ).toString(),
+                                                            condition:
+                                                                valueOrDefault<
+                                                                    String>(
+                                                              getJsonField(
+                                                                searchStockItem,
+                                                                r'''$.condition''',
+                                                              )?.toString(),
+                                                              'NA',
+                                                            ),
+                                                            purchaseDate:
+                                                                getJsonField(
+                                                              searchStockItem,
+                                                              r'''$.purchase_date''',
+                                                            ).toString(),
+                                                            isSold:
+                                                                getJsonField(
+                                                              searchStockItem,
+                                                              r'''$.isSold''',
+                                                            ),
+                                                            vendorvv:
+                                                                getJsonField(
+                                                              searchStockItem,
+                                                              r'''$.vendor_name''',
+                                                            ).toString(),
+                                                            phone: getJsonField(
+                                                              searchStockItem,
+                                                              r'''$.vendor_phone''',
+                                                            ).toString(),
+                                                            purchaseId:
+                                                                getJsonField(
+                                                              searchStockItem,
+                                                              r'''$.purchasesid''',
+                                                            ),
+                                                            stockid:
+                                                                getJsonField(
+                                                              searchStockItem,
+                                                              r'''$.stock_id''',
+                                                            ),
+                                                            purchaseDateee: functions
+                                                                .jsonToDateTime(
+                                                                    getJsonField(
+                                                              searchStockItem,
+                                                              r'''$.purchase_date''',
+                                                            )),
+                                                            productReference:
+                                                                getJsonField(
+                                                              searchStockItem,
+                                                              r'''$.product_reference''',
+                                                            ).toString(),
+                                                            indexinList:
+                                                                searchStockIndex,
                                                           ),
-                                                          parameter4:
-                                                              searchStockItem
-                                                                  .serialNo,
-                                                          parameter5:
-                                                              valueOrDefault<
-                                                                  String>(
-                                                            searchStockItem
-                                                                .vendor,
-                                                            'NA',
-                                                          ),
-                                                          parameter6:
-                                                              searchStockItem
-                                                                  .costPrice,
-                                                          parameter7:
-                                                              searchStockItem
-                                                                  .salePrice,
-                                                          parameter8:
-                                                              valueOrDefault<
-                                                                  String>(
-                                                            searchStockItem
-                                                                .condition,
-                                                            'NA',
-                                                          ),
-                                                          parameter9: dateTimeFormat(
-                                                              "MMMMEEEEd",
-                                                              searchStockItem
-                                                                  .purchaseDate!),
-                                                          parameter10:
-                                                              searchStockItem
-                                                                  .isSold,
-                                                          parameter11:
-                                                              searchStockItem
-                                                                  .vendor,
-                                                          parameter12:
-                                                              searchStockItem
-                                                                  .phone,
-                                                          parameter13:
-                                                              searchStockItem
-                                                                  .purchaseid,
-                                                          parameter14:
-                                                              searchStockItem
-                                                                  .stockid,
-                                                          parameter15:
-                                                              searchStockItem
-                                                                  .purchaseDate,
-                                                          parameter16:
-                                                              searchStockItem
-                                                                  .productReference,
-                                                          parameter17:
-                                                              searchStockIndex,
                                                         );
                                                       },
                                                     );
                                                   },
-                                                ),
-                                              );
-                                            },
+                                                );
+                                              },
+                                            ),
                                           ),
                                       ],
                                     ),

@@ -12,32 +12,32 @@ export 'master_product_list_model.dart';
 class MasterProductListWidget extends StatefulWidget {
   const MasterProductListWidget({
     super.key,
-    this.parameter1,
-    this.parameter2,
-    this.parameter3,
-    this.parameter4,
-    this.parameter5,
-    this.parameter6,
-    this.parameter7,
-    this.parameter8,
-    this.parameter9,
-    this.parameter10,
-    this.parameter11,
-    this.parameter12,
+    this.productName,
+    this.name,
+    this.productconfig,
+    this.typeName,
+    this.productid,
+    this.typeReference,
+    this.brandReference,
+    this.productname,
+    this.productConfig,
+    this.productDescription,
+    this.productCode,
+    this.index,
   });
 
-  final String? parameter1;
-  final String? parameter2;
-  final String? parameter3;
-  final String? parameter4;
-  final int? parameter5;
-  final String? parameter6;
-  final String? parameter7;
-  final String? parameter8;
-  final String? parameter9;
-  final String? parameter10;
-  final String? parameter11;
-  final int? parameter12;
+  final String? productName;
+  final String? name;
+  final String? productconfig;
+  final String? typeName;
+  final int? productid;
+  final String? typeReference;
+  final String? brandReference;
+  final String? productname;
+  final String? productConfig;
+  final String? productDescription;
+  final String? productCode;
+  final int? index;
 
   @override
   State<MasterProductListWidget> createState() =>
@@ -78,7 +78,7 @@ class _MasterProductListWidgetState extends State<MasterProductListWidget> {
           minHeight: 54.0,
         ),
         decoration: BoxDecoration(
-          color: functions.isEven(widget.parameter12!.toString())
+          color: functions.isEven(widget.index!.toString())
               ? Color(0xFF272727)
               : Color(0x00000000),
           border: Border.all(
@@ -108,14 +108,14 @@ class _MasterProductListWidgetState extends State<MasterProductListWidget> {
                           StockDashboardWidget.routeName,
                           queryParameters: {
                             'searchTerm': serializeParam(
-                              widget.parameter1,
+                              widget.productName,
                               ParamType.String,
                             ),
                           }.withoutNulls,
                         );
                       },
                       child: Text(
-                        widget.parameter1!,
+                        widget.productName!,
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               font: GoogleFonts.inter(
                                 fontWeight: FontWeight.w500,
@@ -139,7 +139,7 @@ class _MasterProductListWidgetState extends State<MasterProductListWidget> {
               Expanded(
                 flex: 2,
                 child: Text(
-                  widget.parameter2!,
+                  widget.name!,
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         font: GoogleFonts.inter(
                           fontWeight: FontWeight.w500,
@@ -160,7 +160,7 @@ class _MasterProductListWidgetState extends State<MasterProductListWidget> {
                 child: Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 20.0, 0.0),
                   child: Text(
-                    widget.parameter3!,
+                    widget.productconfig!,
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           font: GoogleFonts.inter(
                             fontWeight: FlutterFlowTheme.of(context)
@@ -188,7 +188,7 @@ class _MasterProductListWidgetState extends State<MasterProductListWidget> {
                 Expanded(
                   flex: 2,
                   child: Text(
-                    widget.parameter4!,
+                    widget.typeName!,
                     style: FlutterFlowTheme.of(context).titleLarge.override(
                           font: GoogleFonts.interTight(
                             fontWeight: FontWeight.w500,
@@ -216,7 +216,7 @@ class _MasterProductListWidgetState extends State<MasterProductListWidget> {
                       queryFn: (q) => q
                           .eqOrNull(
                             'product_reference',
-                            widget.parameter5,
+                            widget.productid,
                           )
                           .eqOrNull(
                             'isSold',
@@ -250,7 +250,7 @@ class _MasterProductListWidgetState extends State<MasterProductListWidget> {
                             StockDashboardWidget.routeName,
                             queryParameters: {
                               'searchTerm': serializeParam(
-                                widget.parameter1,
+                                widget.productName,
                                 ParamType.String,
                               ),
                             }.withoutNulls,
@@ -304,13 +304,13 @@ class _MasterProductListWidgetState extends State<MasterProductListWidget> {
                             return Padding(
                               padding: MediaQuery.viewInsetsOf(context),
                               child: UpdateProductWidget(
-                                typeref: widget.parameter6!,
-                                brandRef: widget.parameter7!,
-                                productid: widget.parameter5,
-                                nameofProduct: widget.parameter8,
-                                config: widget.parameter9,
-                                description: widget.parameter10,
-                                productCode: widget.parameter11,
+                                typeref: widget.typeReference!,
+                                brandRef: widget.brandReference!,
+                                productid: widget.productid,
+                                nameofProduct: widget.productname,
+                                config: widget.productConfig,
+                                description: widget.productDescription,
+                                productCode: widget.productCode,
                               ),
                             );
                           },
@@ -355,7 +355,7 @@ class _MasterProductListWidgetState extends State<MasterProductListWidget> {
                           await ProductsTable().delete(
                             matchingRows: (rows) => rows.eqOrNull(
                               'id',
-                              widget.parameter5,
+                              widget.productid,
                             ),
                           );
                           ScaffoldMessenger.of(context).showSnackBar(

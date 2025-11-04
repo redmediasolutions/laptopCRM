@@ -2,6 +2,7 @@ import '/backend/api_requests/api_calls.dart';
 import '/components/sidebar_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/stock/stock_list_component/stock_list_component_widget.dart';
+import '/stock/stocklistsearchcomponent/stocklistsearchcomponent_widget.dart';
 import 'dart:async';
 import 'stock_dashboard_widget.dart' show StockDashboardWidget;
 import 'package:flutter/material.dart';
@@ -34,12 +35,17 @@ class StockDashboardModel extends FlutterFlowModel<StockDashboardWidget> {
   // Models for StockListComponent dynamic component.
   late FlutterFlowDynamicModels<StockListComponentModel>
       stockListComponentModels;
+  // Models for stocklistsearchcomponent dynamic component.
+  late FlutterFlowDynamicModels<StocklistsearchcomponentModel>
+      stocklistsearchcomponentModels;
 
   @override
   void initState(BuildContext context) {
     sidebarModel = createModel(context, () => SidebarModel());
     stockListComponentModels =
         FlutterFlowDynamicModels(() => StockListComponentModel());
+    stocklistsearchcomponentModels =
+        FlutterFlowDynamicModels(() => StocklistsearchcomponentModel());
   }
 
   @override
@@ -50,6 +56,7 @@ class StockDashboardModel extends FlutterFlowModel<StockDashboardWidget> {
 
     listViewPagingController1?.dispose();
     stockListComponentModels.dispose();
+    stocklistsearchcomponentModels.dispose();
   }
 
   /// Additional helper methods.
