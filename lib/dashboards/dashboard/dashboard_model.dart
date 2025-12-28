@@ -1,6 +1,6 @@
-import '/components/dashboard_items_widget.dart';
-import '/components/sidebar_widget.dart';
+import '/components/side_bar2_widget.dart';
 import '/components/title_bar_widget.dart';
+import '/dashboards/dashboard_components/dashboard_items/dashboard_items_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'dashboard_widget.dart' show DashboardWidget;
 import 'package:flutter/material.dart';
@@ -10,8 +10,8 @@ class DashboardModel extends FlutterFlowModel<DashboardWidget> {
 
   // Model for TitleBar component.
   late TitleBarModel titleBarModel;
-  // Model for sidebar component.
-  late SidebarModel sidebarModel;
+  // Model for sideBar2 component.
+  late SideBar2Model sideBar2Model;
   // Model for dashboardItems component.
   late DashboardItemsModel dashboardItemsModel1;
   // Model for dashboardItems component.
@@ -32,7 +32,7 @@ class DashboardModel extends FlutterFlowModel<DashboardWidget> {
   @override
   void initState(BuildContext context) {
     titleBarModel = createModel(context, () => TitleBarModel());
-    sidebarModel = createModel(context, () => SidebarModel());
+    sideBar2Model = createModel(context, () => SideBar2Model());
     dashboardItemsModel1 = createModel(context, () => DashboardItemsModel());
     dashboardItemsModel2 = createModel(context, () => DashboardItemsModel());
     yesterdaysSaleModel = createModel(context, () => DashboardItemsModel());
@@ -46,7 +46,7 @@ class DashboardModel extends FlutterFlowModel<DashboardWidget> {
   @override
   void dispose() {
     titleBarModel.dispose();
-    sidebarModel.dispose();
+    sideBar2Model.dispose();
     dashboardItemsModel1.dispose();
     dashboardItemsModel2.dispose();
     yesterdaysSaleModel.dispose();

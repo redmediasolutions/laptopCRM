@@ -320,6 +320,7 @@ class StockListCall {
     int? limit,
     String? apikey = '',
     String? businessid = '',
+    String? order = 'purchase_date.desc',
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'Stock list',
@@ -332,6 +333,7 @@ class StockListCall {
       params: {
         'offset': offset,
         'limit': limit,
+        'order': order,
       },
       returnBody: true,
       encodeBodyUtf8: false,

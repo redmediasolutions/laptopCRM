@@ -1,8 +1,8 @@
-import '/auth/supabase_auth/auth_util.dart';
+import '/components/dropdown03_account_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/index.dart';
+import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'title_bar_model.dart';
@@ -80,26 +80,38 @@ class _TitleBarWidgetState extends State<TitleBarWidget> {
                           FlutterFlowTheme.of(context).titleMedium.fontStyle,
                     ),
               ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 20.0, 0.0),
-                child: FlutterFlowIconButton(
-                  borderColor: Color(0xFF8F8F8F),
-                  borderRadius: 8.0,
-                  buttonSize: 30.0,
-                  fillColor: Color(0xFF2F2F2F),
-                  hoverColor: Color(0xFF464646),
-                  icon: Icon(
-                    Icons.logout_rounded,
-                    color: FlutterFlowTheme.of(context).info,
-                    size: 16.0,
+              Builder(
+                builder: (context) => Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 20.0, 0.0),
+                  child: FlutterFlowIconButton(
+                    borderColor: Color(0xFF8F8F8F),
+                    borderRadius: 100.0,
+                    buttonSize: 30.0,
+                    fillColor: Color(0xFF2F2F2F),
+                    hoverColor: Color(0xFF464646),
+                    icon: Icon(
+                      Icons.manage_accounts_rounded,
+                      color: FlutterFlowTheme.of(context).info,
+                      size: 16.0,
+                    ),
+                    onPressed: () async {
+                      showAlignedDialog(
+                        context: context,
+                        isGlobal: false,
+                        avoidOverflow: false,
+                        targetAnchor: AlignmentDirectional(1.0, 0.4)
+                            .resolve(Directionality.of(context)),
+                        followerAnchor: AlignmentDirectional(1.0, -1.0)
+                            .resolve(Directionality.of(context)),
+                        builder: (dialogContext) {
+                          return Material(
+                            color: Colors.transparent,
+                            child: Dropdown03AccountWidget(),
+                          );
+                        },
+                      );
+                    },
                   ),
-                  onPressed: () async {
-                    GoRouter.of(context).prepareAuthEvent();
-                    await authManager.signOut();
-                    GoRouter.of(context).clearRedirectLocation();
-
-                    context.goNamedAuth(LoginWidget.routeName, context.mounted);
-                  },
                 ),
               ),
             ].divide(SizedBox(width: 30.0)),

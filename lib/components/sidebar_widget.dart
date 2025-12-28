@@ -564,10 +564,7 @@ class _SidebarWidgetState extends State<SidebarWidget>
 
     return Container(
       width: 270.0,
-      height: double.infinity,
-      decoration: BoxDecoration(
-        color: Color(0xFF141618),
-      ),
+      decoration: BoxDecoration(),
       child: ListView(
         padding: EdgeInsets.zero,
         primary: false,

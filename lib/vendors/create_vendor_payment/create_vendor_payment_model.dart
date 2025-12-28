@@ -1,9 +1,11 @@
 import '/backend/supabase/supabase.dart';
-import '/components/sidebar_widget.dart';
+import '/components/side_bar2_widget.dart';
+import '/components/title_bar_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
-import '/vendors/per_item_cost/per_item_cost_widget.dart';
-import '/vendors/vendor_item_quantity/vendor_item_quantity_widget.dart';
+import '/vendors/vendors_components/per_item_cost/per_item_cost_widget.dart';
+import '/vendors/vendors_components/secondary_sidebar_vendors/secondary_sidebar_vendors_widget.dart';
+import '/vendors/vendors_components/vendor_item_quantity/vendor_item_quantity_widget.dart';
 import 'create_vendor_payment_widget.dart' show CreateVendorPaymentWidget;
 import 'package:flutter/material.dart';
 
@@ -22,8 +24,12 @@ class CreateVendorPaymentModel
   ///  State fields for stateful widgets in this page.
 
   final formKey = GlobalKey<FormState>();
-  // Model for sidebar component.
-  late SidebarModel sidebarModel;
+  // Model for TitleBar component.
+  late TitleBarModel titleBarModel;
+  // Model for sideBar2 component.
+  late SideBar2Model sideBar2Model;
+  // Model for secondarySidebarVendors component.
+  late SecondarySidebarVendorsModel secondarySidebarVendorsModel;
   // State field(s) for selectVendors widget.
   String? selectVendorsValue;
   FormFieldController<String>? selectVendorsValueController;
@@ -88,7 +94,10 @@ class CreateVendorPaymentModel
 
   @override
   void initState(BuildContext context) {
-    sidebarModel = createModel(context, () => SidebarModel());
+    titleBarModel = createModel(context, () => TitleBarModel());
+    sideBar2Model = createModel(context, () => SideBar2Model());
+    secondarySidebarVendorsModel =
+        createModel(context, () => SecondarySidebarVendorsModel());
     billingAddressTextControllerValidator =
         _billingAddressTextControllerValidator;
     invoiceNumberTextControllerValidator =
@@ -100,7 +109,9 @@ class CreateVendorPaymentModel
 
   @override
   void dispose() {
-    sidebarModel.dispose();
+    titleBarModel.dispose();
+    sideBar2Model.dispose();
+    secondarySidebarVendorsModel.dispose();
     vendorPhoneFocusNode?.dispose();
     vendorPhoneTextController?.dispose();
 

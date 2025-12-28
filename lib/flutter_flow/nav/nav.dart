@@ -78,16 +78,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       navigatorKey: appNavigatorKey,
-      errorBuilder: (context, state) => appStateNotifier.loggedIn
-          ? MasterProductDashboardWidget()
-          : LoginWidget(),
+      errorBuilder: (context, state) =>
+          appStateNotifier.loggedIn ? DashboardWidget() : LoginWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) => appStateNotifier.loggedIn
-              ? MasterProductDashboardWidget()
-              : LoginWidget(),
+          builder: (context, _) =>
+              appStateNotifier.loggedIn ? DashboardWidget() : LoginWidget(),
         ),
         FFRoute(
           name: InventoryDashboardWidget.routeName,
@@ -160,6 +158,41 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => DashboardWidget(),
         ),
         FFRoute(
+          name: BrandsdashboardWidget.routeName,
+          path: BrandsdashboardWidget.routePath,
+          builder: (context, params) => BrandsdashboardWidget(),
+        ),
+        FFRoute(
+          name: WarrantyManagementWidget.routeName,
+          path: WarrantyManagementWidget.routePath,
+          builder: (context, params) => WarrantyManagementWidget(
+            searchTerm: params.getParam(
+              'searchTerm',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: CreateWarrantyWidget.routeName,
+          path: CreateWarrantyWidget.routePath,
+          builder: (context, params) => CreateWarrantyWidget(
+            searchTerm: params.getParam(
+              'searchTerm',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: ProductReportWidget.routeName,
+          path: ProductReportWidget.routePath,
+          builder: (context, params) => ProductReportWidget(
+            searchTerm: params.getParam(
+              'searchTerm',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
           name: CustomerDashboardWidget.routeName,
           path: CustomerDashboardWidget.routePath,
           builder: (context, params) => CustomerDashboardWidget(
@@ -200,39 +233,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           ),
         ),
         FFRoute(
-          name: BrandsdashboardWidget.routeName,
-          path: BrandsdashboardWidget.routePath,
-          builder: (context, params) => BrandsdashboardWidget(),
-        ),
-        FFRoute(
-          name: WarrantyManagementWidget.routeName,
-          path: WarrantyManagementWidget.routePath,
-          builder: (context, params) => WarrantyManagementWidget(
-            searchTerm: params.getParam(
-              'searchTerm',
-              ParamType.String,
-            ),
-          ),
-        ),
-        FFRoute(
-          name: CreateWarrantyWidget.routeName,
-          path: CreateWarrantyWidget.routePath,
-          builder: (context, params) => CreateWarrantyWidget(
-            searchTerm: params.getParam(
-              'searchTerm',
-              ParamType.String,
-            ),
-          ),
-        ),
-        FFRoute(
-          name: ProductReportWidget.routeName,
-          path: ProductReportWidget.routePath,
-          builder: (context, params) => ProductReportWidget(
-            searchTerm: params.getParam(
-              'searchTerm',
-              ParamType.String,
-            ),
-          ),
+          name: ProductsLandingPageWidget.routeName,
+          path: ProductsLandingPageWidget.routePath,
+          builder: (context, params) => ProductsLandingPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
